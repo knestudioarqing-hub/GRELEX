@@ -1,0 +1,48 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-headline: "Space Grotesk", sans-serif;
+
+  --color-primary: #fe5825;
+  --color-surface: #131313;
+  --color-surface-low: #1c1b1b;
+  --color-surface-high: #2a2a2a;
+  --color-surface-highest: #353534;
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #e4beb4;
+  
+  --radius-none: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-full: 0px;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface antialiased selection:bg-primary/30;
+  }
+}
+
+@layer components {
+  .text-gradient-primary {
+    @apply bg-linear-to-br from-[#fe5825] to-[#ffa085] bg-clip-text text-transparent;
+  }
+
+  .btn-primary {
+    @apply bg-linear-to-br from-[#fe5825] to-[#ffa085] text-[#3b0900] px-8 py-4 font-bold uppercase tracking-wider transition-opacity hover:opacity-90 active:scale-[0.98];
+  }
+
+  .glass-panel {
+    @apply bg-[#353534]/60 backdrop-blur-xl border border-white/5;
+  }
+
+  .ambient-glow {
+    @apply shadow-[0_0_40px_rgba(229,226,225,0.05)];
+  }
+}
