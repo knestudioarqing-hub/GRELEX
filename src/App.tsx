@@ -582,7 +582,7 @@ export default function App() {
         {/* ── PORTFOLIO ── */}
         <section id="portfólio" className="py-24 bg-surface">
           <div className="container mx-auto px-6 md:px-16">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
               <motion.div {...fadeUp}>
                 <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Especialidades</span>
                 <h2 className="font-headline text-4xl md:text-6xl font-black tracking-tighter leading-none">
@@ -632,7 +632,7 @@ export default function App() {
         {/* ── SERVICES ── */}
         <section id="serviços" className="py-24 bg-surface-low">
           <div className="container mx-auto px-6 md:px-16">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
               <motion.div {...fadeUp}>
                 <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Especialidades</span>
                 <h2 className="font-headline text-4xl md:text-6xl font-black tracking-tighter leading-none">
@@ -696,7 +696,7 @@ export default function App() {
             <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-6 block">
               Precisa de um projeto?
             </span>
-            <h2 className="font-headline text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8">
+            <h2 className="font-headline text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-tight mb-8">
               Sua obra precisa de projetos que{" "}
               <span className="text-gradient-primary">funcionem</span> e nossa engenharia garante isso.
             </h2>
@@ -729,11 +729,11 @@ export default function App() {
             <div className="flex flex-col sm:flex-row gap-6 text-sm text-on-surface-variant">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-primary shrink-0" />
-                <span>São Paulo, Brasil</span>
+                <span>Florianópolis</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-primary shrink-0" />
-                <span>(11) 9.9999.9999</span>
+                <span>+55 55 98122-5699</span>
               </div>
             </div>
             <a
