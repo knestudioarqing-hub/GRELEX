@@ -169,7 +169,7 @@ export default function App() {
 
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="https://wa.me/5511999999999"
+            href="https://wa.me/5555981225699"
             target="_blank"
             rel="noreferrer"
             className="btn-primary flex items-center gap-2 text-sm py-3 px-6"
@@ -209,7 +209,7 @@ export default function App() {
               </a>
             ))}
             <a
-              href="https://wa.me/5511999999999"
+              href="https://wa.me/5555981225699"
               target="_blank"
               rel="noreferrer"
               className="btn-primary flex items-center gap-2 mt-4"
@@ -274,7 +274,7 @@ export default function App() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href="https://wa.me/5511999999999"
+                  href="https://wa.me/5555981225699"
                   target="_blank"
                   rel="noreferrer"
                   className="btn-primary flex items-center justify-center gap-3 text-base"
@@ -464,7 +464,7 @@ export default function App() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href="https://wa.me/5511999999999"
+                  href="https://wa.me/5555981225699"
                   target="_blank"
                   rel="noreferrer"
                   className="btn-primary flex items-center gap-2"
@@ -670,7 +670,7 @@ export default function App() {
 
             <motion.div {...fadeUp} className="text-center mt-12">
               <a
-                href="https://wa.me/5511999999999"
+                href="https://wa.me/5555981225699"
                 target="_blank"
                 rel="noreferrer"
                 className="btn-primary inline-flex items-center gap-3"
@@ -704,7 +704,7 @@ export default function App() {
               Fale agora com nossa equipe especializada em BIM Elétrico. Atendimento direto — sem robô, sem demora.
             </p>
             <a
-              href="https://wa.me/5511999999999"
+              href="https://wa.me/5555981225699"
               target="_blank"
               rel="noreferrer"
               className="btn-primary inline-flex items-center gap-4 px-12 py-6 group text-base"
@@ -737,7 +737,7 @@ export default function App() {
               </div>
             </div>
             <a
-              href="https://wa.me/5511999999999"
+              href="https://wa.me/5555981225699"
               target="_blank"
               rel="noreferrer"
               className="btn-primary flex items-center gap-2"
@@ -777,7 +777,7 @@ export default function App() {
 
       {/* ── WHATSAPP FLOATING BTN ── */}
       <a
-        href="https://wa.me/5511999999999"
+        href="https://wa.me/5555981225699"
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 right-6 z-50 w-16 h-16 flex items-center justify-center hover:scale-110 transition-transform active:scale-95 drop-shadow-xl"
