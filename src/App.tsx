@@ -380,6 +380,74 @@ export default function App() {
           </div>
         </section>
 
+        {/* ── EXPERTISE ── */}
+        <section className="py-24 bg-surface-low relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-linear-to-r from-primary/60 via-transparent to-transparent" />
+
+          <div className="container mx-auto px-6 md:px-16">
+            {/* Header */}
+            <motion.div {...fadeUp} className="mb-12">
+              <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
+                Expertise
+              </span>
+              <h2 className="font-headline text-4xl md:text-6xl font-black tracking-tighter leading-none">
+                Controle em cada
+                <br />
+                <span className="text-gradient-primary">canto do projeto</span>
+              </h2>
+            </motion.div>
+
+            {/* Image grid — 3 cols, 2 rows for perfect alignment */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 mb-12 md:aspect-[8/3]"
+            >
+              {/* Large image */}
+              <div className="md:col-span-2 md:row-span-2 relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto">
+                <img
+                  src="https://i.imgur.com/axJZsyU.png"
+                  alt="Modelagem BIM 3D — visão geral do proyecto"
+                  className="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
+              </div>
+
+              {/* Top small image */}
+              <div className="relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto">
+                <img
+                  src="https://i.imgur.com/mFSHBAo.png"
+                  alt="Detalhe BIM — quadro elétrico"
+                  className="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
+              </div>
+
+              {/* Bottom small image */}
+              <div className="relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto">
+                <img
+                  src="https://i.imgur.com/x2Yy1AQ.png"
+                  alt="Detalhe BIM — compatibilización de sistemas"
+                  className="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
+              </div>
+            </motion.div>
+
+            {/* Description text */}
+            <motion.p
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="text-on-surface-variant text-lg leading-relaxed max-w-3xl"
+            >
+              Nossa metodologia utiliza tecnologia <strong className="text-on-surface">BIM</strong> (Building Information Modeling) de ponta para garantir o
+              monitoramento integral de todos os sistemas. Com <strong className="text-on-surface">visualizações tridimensionais</strong> detalhadas, eliminamos
+              interferências antes da obra começar, assegurando que cada milímetro do projeto esteja sob total controle
+              técnico.
+            </motion.p>
+          </div>
+        </section>
+
         {/* ── REFERÊNCIA ── */}
         <section className="py-24 bg-surface relative">
           <div className="container mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -674,7 +742,7 @@ export default function App() {
               rel="noreferrer"
               className="btn-primary flex items-center gap-2"
             >
-              <MessageCircle className="w-4 h-4" />
+              <img src="https://i.imgur.com/rZwZ6jL.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
               WhatsApp
             </a>
           </div>
@@ -712,10 +780,10 @@ export default function App() {
         href="https://wa.me/5511999999999"
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white w-14 h-14 flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:scale-110 transition-transform"
+        className="fixed bottom-6 right-6 z-50 w-16 h-16 flex items-center justify-center hover:scale-110 transition-transform active:scale-95 drop-shadow-xl"
         aria-label="WhatsApp"
       >
-        <MessageCircle className="w-7 h-7 fill-white" />
+        <img src="https://i.imgur.com/rZwZ6jL.png" alt="WhatsApp" className="w-full h-full object-contain" />
       </a>
     </div>
   );
