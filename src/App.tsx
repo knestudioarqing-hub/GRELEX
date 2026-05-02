@@ -691,14 +691,15 @@ export default function App() {
 
           <motion.div
             {...fadeUp}
-            className="container mx-auto px-6 text-center max-w-4xl relative z-10"
+            className="container mx-auto px-6 text-center max-w-5xl relative z-10"
           >
             <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-6 block">
               Precisa de um projeto?
             </span>
             <h2 className="font-headline text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-tight mb-8">
-              Sua obra precisa de projetos que{" "}
-              <span className="text-gradient-primary">funcionem</span> e nossa engenharia garante isso.
+              Sua obra precisa de <br className="hidden md:block" />
+              projetos que <span className="text-gradient-primary">funcionem</span> e <br className="hidden md:block" />
+              nossa engenharia garante&nbsp;isso.
             </h2>
             <p className="text-xl text-on-surface-variant mb-12 font-medium max-w-2xl mx-auto">
               Fale agora com nossa equipe especializada em BIM Elétrico. Atendimento direto — sem robô, sem demora.
