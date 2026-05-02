@@ -1,18 +1,22 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
 
 @theme {
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-headline: "Space Grotesk", sans-serif;
 
-  --color-primary: #fe5825;
-  --color-surface: #131313;
-  --color-surface-low: #1c1b1b;
-  --color-surface-high: #2a2a2a;
-  --color-surface-highest: #353534;
-  --color-on-surface: #e5e2e1;
-  --color-on-surface-variant: #e4beb4;
-  
+  /* Accent */
+  --color-primary: #FFA81B;
+
+  /* Backgrounds — escuro dominante #111111 como base */
+  --color-surface:         #111111;   /* fundo principal */
+  --color-surface-low:     #181817;   /* fundo levemente elevado */
+  --color-surface-high:    #252524;   /* cards/containers */
+  --color-surface-highest: #5C5C5B;   /* elementos mais elevados / gris medio */
+
+  /* Textos */
+  --color-on-surface:         #DCDCDC;  /* texto principal — gris muito claro */
+  --color-on-surface-variant: #9F9B96;  /* texto secundário — gris claro (casco) */
+
   --radius-none: 0px;
   --radius-sm: 0px;
   --radius-md: 0px;
@@ -27,22 +31,32 @@
   body {
     @apply bg-surface text-on-surface antialiased selection:bg-primary/30;
   }
+  ::selection {
+    color: #111111;
+  }
 }
 
 @layer components {
   .text-gradient-primary {
-    @apply bg-linear-to-br from-[#fe5825] to-[#ffa085] bg-clip-text text-transparent;
+    @apply bg-linear-to-br from-[#FFA81B] to-[#FFD07A] bg-clip-text text-transparent;
   }
 
   .btn-primary {
-    @apply bg-linear-to-br from-[#fe5825] to-[#ffa085] text-[#3b0900] px-8 py-4 font-bold uppercase tracking-wider transition-opacity hover:opacity-90 active:scale-[0.98];
+    @apply bg-linear-to-br from-[#FFA81B] to-[#FFD07A] text-[#111111] px-8 py-4 font-bold uppercase tracking-wider transition-opacity hover:opacity-90 active:scale-[0.98];
   }
 
   .glass-panel {
-    @apply bg-[#353534]/60 backdrop-blur-xl border border-white/5;
+    @apply bg-[#5C5C5B]/20 backdrop-blur-xl border border-[#DCDCDC]/8;
   }
 
   .ambient-glow {
-    @apply shadow-[0_0_40px_rgba(229,226,225,0.05)];
+    @apply shadow-[0_0_40px_rgba(220,220,220,0.04)];
   }
 }
+
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
