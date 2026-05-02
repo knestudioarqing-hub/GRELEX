@@ -282,10 +282,6 @@ export default function App() {
                   <MessageCircle className="w-5 h-5" />
                   Fale com a gente!
                 </a>
-                <button className="px-8 py-4 border border-white/10 font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-white/5 transition-colors">
-                  Ver Portfólio
-                  <ArrowRight className="w-4 h-4" />
-                </button>
               </div>
             </motion.div>
 
