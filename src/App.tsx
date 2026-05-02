@@ -691,7 +691,7 @@ export default function App() {
 
           <motion.div
             {...fadeUp}
-            className="container mx-auto px-6 text-center max-w-5xl relative z-10"
+            className="container mx-auto px-6 text-center w-full relative z-10"
           >
             <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-6 block">
               Precisa de um projeto?
