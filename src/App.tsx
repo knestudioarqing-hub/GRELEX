@@ -29,7 +29,7 @@ const IMAGES = {
 };
 
 /* ─── DATA ────────────────────────────────────────────────── */
-const NAV_LINKS = ["Início", "Serviços", "Portfólio", "Depoimentos", "Contato"];
+const NAV_LINKS = ["Início", "Serviços", "Diferenciais", "Contato"];
 
 const STATS = [
   { value: "BIM", label: "Metodologia de Trabalho" },
@@ -503,7 +503,7 @@ export default function App() {
         </section>
 
         {/* ── TESTIMONIALS ── */}
-        <section id="depoimentos" className="py-24 bg-surface-low relative overflow-hidden">
+        <section id="diferenciais" className="py-24 bg-surface-low relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-3xl pointer-events-none" />
 
           <div className="container mx-auto px-6 md:px-16">
@@ -763,7 +763,7 @@ export default function App() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-8">
-            {["Portfólio", "Serviços", "Blog", "Vagas", "Política de Privacidade"].map((link) => (
+            {["Serviços", "Blog", "Vagas", "Política de Privacidade"].map((link) => (
               <a
                 key={link}
                 href="#"
