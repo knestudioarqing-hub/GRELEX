@@ -52,7 +52,7 @@ const TESTIMONIALS = [
     stars: 5,
   },
   {
-    quote: "Utilizamos ferramentas de ponta como Revit MEP, AutoCAD Electrical e Navisworks para entregar projetos com zero conflitos interdisciplinares e rastreabilidade total em cada disciplina.",
+    quote: "Utilizamos ferramentas de ponta como Revit MEP e Navisworks para entregar projetos com zero conflitos interdisciplinares e rastreabilidade total em cada disciplina.",
     name: "Ferramentas de Ponta",
     role: "Tecnologia a Serviço da Obra",
     stars: 5,
@@ -323,8 +323,8 @@ export default function App() {
         {/* ── TRUST BAR ── */}
         <section className="py-8 bg-primary overflow-hidden">
           <div className="flex gap-16 animate-[marquee_20s_linear_infinite] whitespace-nowrap">
-            {["Revit MEP", "AutoCAD Electrical", "BIM Nível 2", "ABNT NBR 5419", "NR-10", "IEC 60364", "Dialux Evo", "Navisworks", "BIM Collaborate", "AutoCAD MEP"].concat(
-              ["Revit MEP", "AutoCAD Electrical", "BIM Nível 2", "ABNT NBR 5419", "NR-10", "IEC 60364", "Dialux Evo", "Navisworks"]
+            {["Revit MEP", "BIM Nível 2", "ABNT NBR 5419", "NR-10", "IEC 60364", "Dialux Evo", "Navisworks", "BIM Collaborate"].concat(
+              ["Revit MEP", "BIM Nível 2", "ABNT NBR 5419", "NR-10", "IEC 60364", "Dialux Evo", "Navisworks"]
             ).map((name, i) => (
               <span key={i} className="text-[#3b0900] font-black uppercase tracking-widest text-sm">
                 {name}
@@ -729,7 +729,7 @@ export default function App() {
             <div className="flex flex-col sm:flex-row gap-6 text-sm text-on-surface-variant">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-primary shrink-0" />
-                <span>Florianópolis</span>
+                <span>Florianópolis, SC</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-primary shrink-0" />
