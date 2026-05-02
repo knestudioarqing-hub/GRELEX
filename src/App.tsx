@@ -707,7 +707,7 @@ export default function App() {
               href="https://wa.me/5555981225699"
               target="_blank"
               rel="noreferrer"
-              className="btn-primary inline-flex items-center gap-4 px-12 py-6 group text-base"
+              className="btn-primary inline-flex items-center gap-2 sm:gap-4 px-4 py-4 md:px-12 md:py-6 group text-[10px] sm:text-xs md:text-base whitespace-nowrap"
             >
               <MessageCircle className="w-6 h-6" />
               Fale no WhatsApp agora
