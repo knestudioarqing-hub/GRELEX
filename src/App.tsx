@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import {
   Zap,
@@ -19,6 +19,7 @@ import {
   MapPin,
   Phone,
   Star,
+  Palette,
 } from "lucide-react";
 
 /* ─── IMAGES ─────────────────────────────────────────────── */
@@ -84,6 +85,131 @@ const PORTFOLIO_PROJECTS = [
   { name: "SPDA — Para-raios", type: "Proteção Atmosférica ABNT NBR 5419", img: "https://i.imgur.com/MeXi8Il.jpg" },
   { name: "Telecomunicações", type: "Cabeamento Estruturado & Dados", img: "https://i.imgur.com/GTdBcsO.jpg" },
 ];
+
+/* ─── MOOD LIGHT ─────────────────────────────────────────── */
+const MOODS = [
+  { id: "amber",   label: "Âmbar",       primary: "#FFA81B", secondary: "#FFD07A", glow: "rgba(255,168,27,0.15)" },
+  { id: "cyan",    label: "Ciano",        primary: "#00D4FF", secondary: "#7EEEFF", glow: "rgba(0,212,255,0.12)" },
+  { id: "violet",  label: "BIM Roxo",     primary: "#A855F7", secondary: "#D8B4FE", glow: "rgba(168,85,247,0.12)" },
+  { id: "green",   label: "Verde Tec",    primary: "#22C55E", secondary: "#86EFAC", glow: "rgba(34,197,94,0.12)" },
+  { id: "red",     label: "Plasma",       primary: "#EF4444", secondary: "#FCA5A5", glow: "rgba(239,68,68,0.12)" },
+  { id: "white",   label: "Platina",      primary: "#E2E2E2", secondary: "#FFFFFF", glow: "rgba(220,220,220,0.08)" },
+];
+
+type Mood = typeof MOODS[number];
+
+function applyMood(mood: Mood) {
+  const root = document.documentElement;
+  root.style.setProperty("--color-primary", mood.primary);
+  root.style.setProperty("--mood-secondary", mood.secondary);
+  root.style.setProperty("--mood-glow", mood.glow);
+  // Rebuild gradient classes that use hardcoded hex in @layer components
+  let styleEl = document.getElementById("mood-style") as HTMLStyleElement | null;
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = "mood-style";
+    document.head.appendChild(styleEl);
+  }
+  styleEl.textContent = `
+    .text-gradient-primary {
+      background: linear-gradient(to bottom right, ${mood.primary}, ${mood.secondary}) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+    .btn-primary {
+      background: linear-gradient(to bottom right, ${mood.primary}, ${mood.secondary}) !important;
+    }
+  `;
+}
+
+function MoodLight() {
+  const [open, setOpen] = useState(false);
+  const [activeMood, setActiveMood] = useState<string>(() => {
+    return localStorage.getItem("grelex-mood") ?? "amber";
+  });
+
+  const apply = useCallback((mood: Mood) => {
+    setActiveMood(mood.id);
+    applyMood(mood);
+    localStorage.setItem("grelex-mood", mood.id);
+  }, []);
+
+  // Apply saved mood on mount
+  useEffect(() => {
+    const saved = MOODS.find(m => m.id === activeMood) ?? MOODS[0];
+    applyMood(saved);
+  }, []);
+
+  return (
+    <div className="fixed bottom-28 right-6 z-50 flex flex-col items-end gap-3">
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.85, y: 10 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col gap-2 bg-[#181817]/90 backdrop-blur-xl border border-white/10 p-4 rounded-[5px] shadow-2xl"
+          >
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#9F9B96] mb-1 text-right">Mood Light</p>
+            {MOODS.map((mood) => (
+              <button
+                key={mood.id}
+                onClick={() => apply(mood)}
+                className="flex items-center gap-3 px-3 py-2 rounded-[3px] transition-all hover:bg-white/5 group"
+                title={mood.label}
+              >
+                {/* Color swatch */}
+                <span
+                  className="w-5 h-5 rounded-full shrink-0 ring-2 transition-all duration-300"
+                  style={{
+                    background: `linear-gradient(135deg, ${mood.primary}, ${mood.secondary})`,
+                    boxShadow: activeMood === mood.id ? `0 0 12px 3px ${mood.primary}60` : "none",
+                    ringColor: activeMood === mood.id ? mood.primary : "transparent",
+                    outline: activeMood === mood.id ? `2px solid ${mood.primary}` : "2px solid transparent",
+                  }}
+                />
+                <span
+                  className="text-xs font-bold uppercase tracking-widest transition-colors"
+                  style={{ color: activeMood === mood.id ? mood.primary : "#9F9B96" }}
+                >
+                  {mood.label}
+                </span>
+                {activeMood === mood.id && (
+                  <motion.span
+                    layoutId="mood-active-dot"
+                    className="ml-auto w-1.5 h-1.5 rounded-full"
+                    style={{ backgroundColor: mood.primary }}
+                  />
+                )}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Toggle button */}
+      <motion.button
+        onClick={() => setOpen(v => !v)}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.94 }}
+        className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-[#181817]/90 backdrop-blur-xl shadow-xl transition-colors"
+        style={{
+          boxShadow: open
+            ? `0 0 20px 4px ${MOODS.find(m => m.id === activeMood)?.primary ?? "#FFA81B"}40`
+            : undefined,
+        }}
+        aria-label="Mood Light"
+      >
+        <Palette
+          className="w-5 h-5 transition-colors"
+          style={{ color: MOODS.find(m => m.id === activeMood)?.primary ?? "#FFA81B" }}
+        />
+      </motion.button>
+    </div>
+  );
+}
 
 /* ─── ANIMATION HELPERS ───────────────────────────────────── */
 const fadeUp = {
@@ -771,6 +897,9 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* ── MOOD LIGHT ── */}
+      <MoodLight />
 
       {/* ── WHATSAPP FLOATING BTN ── */}
       <a
