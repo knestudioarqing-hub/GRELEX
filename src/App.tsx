@@ -223,7 +223,7 @@ export default function App() {
 
       <main className="flex-grow">
         {/* ── HERO ── */}
-        <section id="início" className="relative min-h-screen flex items-center overflow-hidden">
+        <section id="inicio" className="relative min-h-screen flex items-center overflow-hidden">
           {/* BG */}
           <div className="absolute inset-0 z-0">
             <img
@@ -318,10 +318,10 @@ export default function App() {
 
         {/* ── TRUST BAR ── */}
         <section className="py-8 bg-primary overflow-hidden">
-          <div className="flex gap-16 animate-[marquee_20s_linear_infinite] whitespace-nowrap">
-            {["Revit MEP", "BIM Nível 2", "ABNT NBR 5419", "NR-10", "IEC 60364", "Dialux Evo", "Navisworks", "BIM Collaborate"].concat(
-              ["Revit MEP", "BIM Nível 2", "ABNT NBR 5419", "NR-10", "IEC 60364", "Dialux Evo", "Navisworks"]
-            ).map((name, i) => (
+          <div className="flex gap-16 pr-16 animate-[marquee_20s_linear_infinite] whitespace-nowrap w-max">
+            {[...Array(4)].flatMap(() => [
+              "Revit MEP", "NR-34", "ABNT NBR 5419", "NR-10", "IEC 60364", "Dialux Evo", "Navisworks", "BIM Collaborate"
+            ]).map((name, i) => (
               <span key={i} className="text-[#3b0900] font-black uppercase tracking-widest text-sm">
                 {name}
               </span>
@@ -576,7 +576,7 @@ export default function App() {
         </section>
 
         {/* ── PORTFOLIO ── */}
-        <section id="portfólio" className="py-24 bg-surface">
+        <section id="servicos" className="py-24 bg-surface">
           <div className="container mx-auto px-6 md:px-16">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
               <motion.div {...fadeUp}>
@@ -589,7 +589,7 @@ export default function App() {
               </motion.div>
               <motion.a
                 {...fadeUp}
-                href="#serviços"
+                href="#especialidades"
                 className="flex items-center gap-2 text-primary font-bold uppercase tracking-widest text-sm hover:gap-4 transition-all"
               >
                 Conheça nossas soluções
@@ -626,7 +626,7 @@ export default function App() {
         </section>
 
         {/* ── SERVICES ── */}
-        <section id="serviços" className="py-24 bg-surface-low">
+        <section id="especialidades" className="py-24 bg-surface-low">
           <div className="container mx-auto px-6 md:px-16">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
               <motion.div {...fadeUp}>
@@ -759,7 +759,7 @@ export default function App() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-8">
-            {["Serviços", "Blog", "Vagas", "Política de Privacidade"].map((link) => (
+            {["Serviços", "Política de Privacidade"].map((link) => (
               <a
                 key={link}
                 href="#"
