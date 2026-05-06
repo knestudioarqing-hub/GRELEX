@@ -385,7 +385,7 @@ export default function App() {
                 </span>
               </div>
 
-              <h1 className="font-headline text-5xl md:text-7xl lg:text-8xl font-black leading-[0.92] tracking-tighter mb-8">
+              <h1 className="font-headline text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.92] tracking-tighter mb-8">
                 Projetos de{" "}
                 <span className="text-gradient-primary">Engenharia</span>
                 <br />
