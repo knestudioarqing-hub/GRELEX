@@ -79,6 +79,12 @@ const SERVICES = [
   { Icon: Wind, title: "Telecomunicações", desc: "Cabeamento estruturado, redes de voz e dados, TV, interfonia e CFTV com compatibilidade e rastreabilidade total." },
 ];
 
+const TEAM_MEMBERS = [
+  { img: "https://i.imgur.com/4p24oGr.jpeg", name: "Pablo Coelho", role: "Engenheiro Eletricista" },
+  { img: "https://i.imgur.com/fs4uXLK.jpeg", name: "Gianfranco N.", role: "Founder e Coordenador BIM" },
+  { img: "https://i.imgur.com/Dn7XWAb.jpeg", name: "Roger Beppler", role: "Engenheiro Eletricista" },
+];
+
 const PORTFOLIO_PROJECTS = [
   { name: "Automações Prediais", type: "Controle & Integração BIM", img: "https://i.imgur.com/wSDGFAI.jpg" },
   { name: "Sistemas Elétricos", type: "BIM Elétrico — Baixa e Média Tensão", img: "https://i.imgur.com/Uv6ONUw.jpg" },
@@ -801,6 +807,57 @@ export default function App() {
                 Fale com a gente
               </a>
             </motion.div>
+          </div>
+        </section>
+
+        {/* ── NOSSA EQUIPE ── */}
+        <section id="equipe" className="py-24 bg-surface relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-linear-to-r from-primary/60 via-transparent to-transparent" />
+          <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-primary/5 blur-3xl rounded-full pointer-events-none" />
+
+          <div className="container mx-auto px-6 md:px-16">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <motion.span {...fadeUp} className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
+                As Pessoas Por Trás dos Projetos
+              </motion.span>
+              <motion.h2 {...fadeUp} className="font-headline text-4xl md:text-6xl font-black tracking-tighter">
+                Nossa{" "}
+                <span className="text-gradient-primary">Equipe</span>
+              </motion.h2>
+            </div>
+
+            {/* Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {TEAM_MEMBERS.map((member, i) => (
+                <motion.div
+                  key={i}
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: i * 0.15 }}
+                  className="group relative flex flex-col items-center text-center"
+                >
+                  {/* Photo */}
+                  <div className="relative w-full aspect-[3/4] overflow-hidden border border-white/10 mb-6">
+                    <img
+                      src={member.img}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-surface/80 via-surface/10 to-transparent" />
+                    {/* Accent bar */}
+                    <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[3px] bg-primary transition-all duration-500" />
+                  </div>
+
+                  {/* Info */}
+                  <h3 className="font-headline text-xl font-black uppercase tracking-tight mb-1">
+                    {member.name}
+                  </h3>
+                  <p className="text-primary font-bold uppercase tracking-[0.2em] text-[10px]">
+                    {member.role}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
