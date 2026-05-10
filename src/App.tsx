@@ -278,12 +278,19 @@ export default function App() {
           scrolled ? "bg-[#111111]/95 backdrop-blur-lg shadow-lg shadow-[#111111]/60 py-4" : "bg-transparent py-6"
         } px-6 md:px-16 flex items-center justify-between`}
       >
-        <div className="text-xl font-headline font-black tracking-tighter uppercase flex items-center gap-2">
-          <span className="text-gradient-primary">Grelex</span>
-          <span className="text-on-surface/60 text-xs font-medium normal-case tracking-wide hidden sm:block">
-            Engenharia Elétrica
+        <a href="#inicio" className="flex items-center gap-3">
+          <img
+            src="https://i.imgur.com/DWraQLz.png"
+            alt="Grelex Engenharia Elétrica"
+            className="h-10 w-auto object-contain"
+            loading="eager"
+            decoding="async"
+          />
+          <span className="w-px h-6 bg-white/20" />
+          <span style={{ fontFamily: "'Poppins', sans-serif" }} className="text-white font-medium text-lg uppercase tracking-tighter">
+            GRELEX
           </span>
-        </div>
+        </a>
 
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link, i) => (
@@ -363,6 +370,9 @@ export default function App() {
               alt="Infraestrutura elétrica industrial"
               className="w-full h-full object-cover opacity-30 grayscale-[0.3]"
               referrerPolicy="no-referrer"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-linear-to-r from-surface via-surface/85 to-transparent" />
             <div className="absolute inset-0 bg-linear-to-t from-surface via-transparent to-surface/60" />
@@ -491,6 +501,8 @@ export default function App() {
                       className="absolute inset-0 w-full h-full object-cover opacity-10 grayscale"
                       referrerPolicy="no-referrer"
                       alt=""
+                      loading="lazy"
+                      decoding="async"
                     />
                   )}
                   <div className="relative z-10 text-center">
@@ -537,6 +549,8 @@ export default function App() {
                   src="https://i.imgur.com/axJZsyU.png"
                   alt="Modelagem BIM 3D — visão geral do proyecto"
                   className="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
               </div>
@@ -547,6 +561,8 @@ export default function App() {
                   src="https://i.imgur.com/mFSHBAo.png"
                   alt="Detalhe BIM — quadro elétrico"
                   className="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
               </div>
@@ -557,6 +573,8 @@ export default function App() {
                   src="https://i.imgur.com/x2Yy1AQ.png"
                   alt="Detalhe BIM — compatibilización de sistemas"
                   className="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
               </div>
@@ -613,6 +631,8 @@ export default function App() {
                    src="https://i.imgur.com/qydWXJR.jpg"
                    alt="Modelagem BIM 3D"
                    className="w-full h-full object-cover"
+                   loading="lazy"
+                   decoding="async"
                  />
                 <div className="absolute inset-0 bg-linear-to-t from-surface/60 to-transparent" />
 
@@ -742,6 +762,8 @@ export default function App() {
                     alt={p.name}
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                     referrerPolicy="no-referrer"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-surface via-surface/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
@@ -842,6 +864,8 @@ export default function App() {
                       src={member.img}
                       alt={member.name}
                       className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-surface/80 via-surface/10 to-transparent" />
                     {/* Accent bar */}
@@ -898,8 +922,8 @@ export default function App() {
 
         {/* ── CONTATO ── */}
         <section id="contato" className="py-16 bg-surface-low border-t border-white/5">
-          <div className="container mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div>
+          <div className="container mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+            <div className="text-left w-full md:w-auto">
               <h3 className="font-headline text-2xl font-black uppercase tracking-tight mb-2">
                 Fale com a gente,
                 <br />
@@ -930,12 +954,16 @@ export default function App() {
       </main>
 
       {/* ── FOOTER ── */}
-      <footer className="bg-surface py-12 px-6 md:px-16 border-t border-white/5">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex flex-col items-center md:items-start">
-            <div className="text-xl font-headline font-black uppercase tracking-tighter mb-2">
-              <span className="text-gradient-primary">Grelex</span> Engenharia
-            </div>
+      <footer className="bg-surface py-12 border-t border-white/5">
+        <div className="container mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col items-center md:items-start gap-3">
+            <img
+              src="https://i.imgur.com/DWraQLz.png"
+              alt="Grelex Engenharia Elétrica"
+              className="h-10 w-auto object-contain"
+              loading="lazy"
+              decoding="async"
+            />
             <p className="text-[#9F9B96] text-xs tracking-wide">
               © 2024 Grelex Engenharia Elétrica. Projetos que funcionam de verdade.
             </p>
