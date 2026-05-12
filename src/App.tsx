@@ -80,9 +80,9 @@ const SERVICES = [
 ];
 
 const TEAM_MEMBERS = [
-  { img: "https://i.imgur.com/4p24oGr.jpeg", name: "Pablo Coelho", role: "Engenheiro Eletricista" },
-  { img: "https://i.imgur.com/fs4uXLK.jpeg", name: "Gianfranco N.", role: "Founder e Coordenador BIM" },
-  { img: "https://i.imgur.com/Dn7XWAb.jpeg", name: "Roger Beppler", role: "Engenheiro Eletricista" },
+  { img: "/pablo.png", name: "Pablo Coelho", role: "Engenheiro Eletricista" },
+  { img: "/gian.png", name: "Gianfranco N.", role: "Founder e Coordenador BIM" },
+  { img: "/roger.png", name: "Roger Beppler", role: "Engenheiro Eletricista" },
 ];
 
 const PORTFOLIO_PROJECTS = [
@@ -401,7 +401,7 @@ export default function App() {
                 </span>
               </div>
 
-              <h1 className="font-headline text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.92] tracking-tighter mb-8">
+              <h1 className="font-headline text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.92] tracking-tighter mb-8">
                 Projetos de{" "}
                 <span className="text-gradient-primary">Engenharia</span>
                 <br />
@@ -410,7 +410,7 @@ export default function App() {
                 Alta Performance
               </h1>
 
-              <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mb-10 leading-relaxed font-medium">
+              <p className="text-base md:text-xl text-on-surface-variant max-w-2xl mb-10 leading-relaxed font-medium">
                 Compatibilidade, eficiência na execução e desempenho que faz a diferença após a entrega. Projetos que <strong className="text-on-surface">funcionam de verdade</strong>.
               </p>
 
@@ -459,12 +459,21 @@ export default function App() {
         </section>
 
         {/* ── TRUST BAR ── */}
-        <section className="py-8 bg-primary overflow-hidden">
-          <div className="flex gap-16 pr-16 animate-[marquee_20s_linear_infinite] whitespace-nowrap w-max">
+        <section 
+          className="py-8 overflow-hidden border-y border-white/5 relative"
+          style={{
+            background: "linear-gradient(90deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.01) 100%)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.05)",
+          }}
+        >
+          <div className="absolute inset-0 bg-primary/5 pointer-events-none" />
+          <div className="flex gap-16 pr-16 animate-[marquee_20s_linear_infinite] whitespace-nowrap w-max relative z-10">
             {[...Array(4)].flatMap(() => [
               "Revit MEP", "NR-34", "ABNT NBR 5419", "NR-10", "IEC 60364", "Dialux Evo", "Navisworks", "BIM Collaborate"
             ]).map((name, i) => (
-              <span key={i} className="text-[#3b0900] font-black uppercase tracking-widest text-sm">
+              <span key={i} className="text-primary font-black uppercase tracking-widest text-sm drop-shadow-[0_0_12px_var(--mood-glow,rgba(255,168,27,0.4))]">
                 {name}
               </span>
             ))}
@@ -480,40 +489,70 @@ export default function App() {
               <motion.span {...fadeUp} className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
                 Nossa Metodologia
               </motion.span>
-              <motion.h2 {...fadeUp} className="font-headline text-4xl md:text-6xl font-black tracking-tighter">
+              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-6xl font-black tracking-tighter">
                 Engenharia elétrica desenvolvida
                 <br />
                 <span className="text-gradient-primary">com rigor técnico e BIM de ponta.</span>
               </motion.h2>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 border border-white/5">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {STATS.map((stat, i) => (
                 <motion.div
                   key={i}
                   {...fadeUp}
                   transition={{ duration: 0.7, delay: i * 0.1 }}
-                  className="relative h-52 flex flex-col items-center justify-center p-8 border border-white/5 group overflow-hidden"
+                  className="relative h-56 flex flex-col items-center justify-center p-8 group overflow-hidden rounded-[8px] cursor-default"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.04) 100%)",
+                    backdropFilter: "blur(20px)",
+                    WebkitBackdropFilter: "blur(20px)",
+                    border: "1px solid rgba(255,255,255,0.10)",
+                    boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.3)",
+                  }}
                 >
+                  {/* Glass reflection — top highlight */}
+                  <div
+                    className="absolute top-0 left-0 w-full h-1/2 pointer-events-none rounded-t-[8px]"
+                    style={{
+                      background: "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%)",
+                    }}
+                  />
+
+                  {/* Hover glow */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[8px]"
+                    style={{
+                      background: "radial-gradient(circle at 50% 50%, var(--mood-glow, rgba(255,168,27,0.12)) 0%, transparent 70%)",
+                      boxShadow: "inset 0 0 30px rgba(255,255,255,0.03)",
+                    }}
+                  />
+
                   {stat.label === "Modelagem em Revit MEP" && (
                     <img
                       src={IMAGES.STATS}
-                      className="absolute inset-0 w-full h-full object-cover opacity-10 grayscale"
+                      className="absolute inset-0 w-full h-full object-cover opacity-[0.06] grayscale rounded-[8px]"
                       referrerPolicy="no-referrer"
                       alt=""
                       loading="lazy"
                       decoding="async"
                     />
                   )}
+
                   <div className="relative z-10 text-center">
-                    <p className="font-headline text-5xl font-black text-primary mb-2">
+                    <p className="font-headline text-4xl sm:text-5xl font-black text-primary mb-3 drop-shadow-[0_0_15px_var(--mood-glow,rgba(255,168,27,0.25))]">
                       <AnimatedCounter value={stat.value} />
                     </p>
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant">
                       {stat.label}
                     </p>
                   </div>
-                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[2px] bg-primary transition-all duration-500" />
+
+                  {/* Bottom accent bar */}
+                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[2px] bg-gradient-to-r from-primary via-primary/60 to-transparent transition-all duration-700 rounded-b-[8px]" />
+
+                  {/* Corner accent */}
+                  <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-primary/20 group-hover:bg-primary/50 transition-colors duration-500" />
                 </motion.div>
               ))}
             </div>
@@ -530,7 +569,7 @@ export default function App() {
               <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
                 Expertise
               </span>
-              <h2 className="font-headline text-4xl md:text-6xl font-black tracking-tighter leading-none">
+              <h2 className="font-headline text-3xl md:text-6xl font-black tracking-tighter leading-none">
                 Controle em cada
                 <br />
                 <span className="text-gradient-primary">canto do projeto</span>
@@ -544,39 +583,39 @@ export default function App() {
               className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 mb-12 md:aspect-[8/3]"
             >
               {/* Large image */}
-              <div className="md:col-span-2 md:row-span-2 relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto">
+              <div className="md:col-span-2 md:row-span-2 relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto group">
                 <img
                   src="https://i.imgur.com/axJZsyU.png"
                   alt="Modelagem BIM 3D — visão geral do proyecto"
-                  className="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent pointer-events-none" />
               </div>
 
               {/* Top small image */}
-              <div className="relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto">
+              <div className="relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto group">
                 <img
                   src="https://i.imgur.com/mFSHBAo.png"
                   alt="Detalhe BIM — quadro elétrico"
-                  className="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent pointer-events-none" />
               </div>
 
               {/* Bottom small image */}
-              <div className="relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto">
+              <div className="relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto group">
                 <img
                   src="https://i.imgur.com/x2Yy1AQ.png"
                   alt="Detalhe BIM — compatibilización de sistemas"
-                  className="w-full h-full object-cover grayscale-[20%] hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent pointer-events-none" />
               </div>
             </motion.div>
 
@@ -601,7 +640,7 @@ export default function App() {
               <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
                 Quem somos
               </span>
-              <h2 className="font-headline text-4xl md:text-6xl font-black tracking-tighter leading-none mb-8">
+              <h2 className="font-headline text-3xl md:text-6xl font-black tracking-tighter leading-none mb-8">
                 Time especializado em BIM Elétrico, desenvolvendo projetos com
                 <span className="text-gradient-primary"> precisão técnica e compatibilidade total</span>
               </h2>
@@ -626,11 +665,11 @@ export default function App() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative aspect-[4/3] overflow-hidden border border-white/10">
+              <div className="relative aspect-[4/3] overflow-hidden border border-white/10 group">
                 <img
                    src="https://i.imgur.com/qydWXJR.jpg"
                    alt="Modelagem BIM 3D"
-                   className="w-full h-full object-cover"
+                   className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                    loading="lazy"
                    decoding="async"
                  />
@@ -659,7 +698,7 @@ export default function App() {
               <motion.span {...fadeUp} className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
                 Por que a Grelex?
               </motion.span>
-              <motion.h2 {...fadeUp} className="font-headline text-4xl md:text-6xl font-black tracking-tighter">
+              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-6xl font-black tracking-tighter">
                 Nossos diferenciais em BIM Elétrico
               </motion.h2>
             </div>
@@ -672,7 +711,7 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4 }}
-                  className="bg-surface border border-white/5 p-10 md:p-14 border-l-4 border-l-primary text-center"
+                  className="bg-surface border border-white/5 p-6 sm:p-10 md:p-14 border-l-4 border-l-primary text-center"
                 >
                   {/* Stars */}
                   <div className="flex justify-center gap-1 mb-6">
@@ -681,7 +720,7 @@ export default function App() {
                     ))}
                   </div>
 
-                  <p className="font-headline text-2xl md:text-3xl font-black leading-snug mb-8 text-on-surface">
+                  <p className="font-headline text-base sm:text-xl md:text-3xl font-black leading-snug mb-8 text-on-surface">
                     &ldquo;{TESTIMONIALS[activeTestimonial].quote}&rdquo;
                   </p>
 
@@ -733,7 +772,7 @@ export default function App() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
               <motion.div {...fadeUp}>
                 <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Especialidades</span>
-                <h2 className="font-headline text-4xl md:text-6xl font-black tracking-tighter leading-none">
+                <h2 className="font-headline text-3xl md:text-6xl font-black tracking-tighter leading-none">
                   Nossas disciplinas
                   <br />
                   <span className="text-gradient-primary">em BIM Elétrico</span>
@@ -785,7 +824,7 @@ export default function App() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
               <motion.div {...fadeUp}>
                 <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Especialidades</span>
-                <h2 className="font-headline text-4xl md:text-6xl font-black tracking-tighter leading-none">
+                <h2 className="font-headline text-3xl md:text-6xl font-black tracking-tighter leading-none">
                   Nós podemos te ajudar
                   <br />
                   com <span className="text-gradient-primary">engenharia</span>
@@ -843,7 +882,7 @@ export default function App() {
               <motion.span {...fadeUp} className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
                 As Pessoas Por Trás dos Projetos
               </motion.span>
-              <motion.h2 {...fadeUp} className="font-headline text-4xl md:text-6xl font-black tracking-tighter">
+              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-6xl font-black tracking-tighter">
                 Nossa{" "}
                 <span className="text-gradient-primary">Equipe</span>
               </motion.h2>
@@ -899,12 +938,12 @@ export default function App() {
             <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-6 block">
               Precisa de um projeto?
             </span>
-            <h2 className="font-headline text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-tight mb-8">
+            <h2 className="font-headline text-3xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-tight mb-8">
               Sua obra precisa de <br className="hidden md:block" />
               projetos que <span className="text-gradient-primary">funcionem</span> e <br className="hidden md:block" />
               nossa engenharia garante&nbsp;isso.
             </h2>
-            <p className="text-xl text-on-surface-variant mb-12 font-medium max-w-2xl mx-auto">
+            <p className="text-base sm:text-xl text-on-surface-variant mb-12 font-medium max-w-2xl mx-auto">
               Fale agora com nossa equipe especializada em BIM Elétrico. Atendimento direto — sem robô, sem demora.
             </p>
             <a
