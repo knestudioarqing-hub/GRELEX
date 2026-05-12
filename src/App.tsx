@@ -24,7 +24,7 @@ import {
 
 /* ─── IMAGES ─────────────────────────────────────────────── */
 const IMAGES = {
-  HERO: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCNGJIPXLNG-0iI4R3LqE2ZldgWJwTyR7LlArQ_T_sMff5MxLKqiJ1djYL406042YaUwP8AyNUqHl9WmfAS2ckBqDSeiX2uaaVcBNiH0Mr7MHiHnK7CvsGbWwl00oh82zQ8i89dEL74JQWOT4LMTv7bW4awLzW4tKEuQEoVMUaFg4oTV93iJberTBYC9JYAyeg46Q3m8rrtV8Uqz-PWWjWACXGEADCA17aSnRTyMyzF6_wuYR4hdSMsRASaEsdZQZ3Y_2jrTXoUimI",
+  HERO: "/mep2.png",
   BIM: "https://lh3.googleusercontent.com/aida-public/AB6AXuDwzn-4WsxgfJEBcRjflcLDEApoD2VKo_y9ESzJqKahJaAbYQfYMZpVHM7KXURrkN_p_Naf99AIPIOnR8CK-itAc8JDv4ow45IS6lI9zeJKeKWIzocD_0v_2_PI4bIEKyOI79n8w-4XdxXlVnqOScNR_B8Oagt6FSmqqBLbfN2O_7ZRujJw3rTwap3BRFgMtMYVqRNCCCtUXyFqkYU9u9mV5uCZ_Ha_pbl4bXxE4rC_qn8L3NoiSFa0j5CtSvlVXOpmdsFnYA_6gGZk",
   STATS: "https://lh3.googleusercontent.com/aida-public/AB6AXuA6yglulGyrztz04HwXU33vYugPWxK8YKKWpERlUB5EOyIsYF0R3LKhDWiLF3qX9mFLj0s6M2259pRcrFfjcsGogiwqqoEs2iyNXJ2SZ9jFSg8UJYZlz9YOIKGjSlzszsKsZztu1A8ObSOHCLHzGXa8X2qbYgVQv_lijIqeAafWEdTNe1DLMRbuHbOjfpqX5Vr5hO4mU_y6Dpy0bF2kePzlMTCvvN8qLWrgpvQhwVV0QZJPJrkYsEBf5nuucVY7pmOhnPy8gAEmdceN",
 };
@@ -124,7 +124,21 @@ function applyMood(mood: Mood) {
       background-clip: text !important;
     }
     .btn-primary {
-      background: linear-gradient(to bottom right, ${mood.primary}, ${mood.secondary}) !important;
+      background: linear-gradient(135deg, ${mood.primary}20, transparent) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid ${mood.primary}40 !important;
+      color: ${mood.primary} !important;
+      box-shadow: 0 0 20px ${mood.glow}, inset 0 0 10px ${mood.glow} !important;
+      text-shadow: 0 0 8px ${mood.glow} !important;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, ${mood.primary}40, ${mood.primary}10) !important;
+      border-color: ${mood.primary}80 !important;
+      color: #fff !important;
+      box-shadow: 0 0 30px ${mood.primary}40, inset 0 0 20px ${mood.primary}40 !important;
+      text-shadow: 0 0 10px ${mood.primary} !important;
+      transform: translateY(-2px);
     }
   `;
 }
@@ -368,14 +382,14 @@ export default function App() {
             <img
               src={IMAGES.HERO}
               alt="Infraestrutura elétrica industrial"
-              className="w-full h-full object-cover opacity-30 grayscale-[0.3]"
+              className="w-full h-full object-cover opacity-60 grayscale-[0.3]"
               referrerPolicy="no-referrer"
               loading="eager"
               fetchPriority="high"
               decoding="async"
             />
-            <div className="absolute inset-0 bg-linear-to-r from-surface via-surface/85 to-transparent" />
-            <div className="absolute inset-0 bg-linear-to-t from-surface via-transparent to-surface/60" />
+            <div className="absolute inset-0 bg-linear-to-r from-surface via-surface/50 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-surface via-transparent to-surface/20" />
           </div>
 
           {/* Decorative grid */}
