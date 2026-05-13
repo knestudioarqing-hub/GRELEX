@@ -30,7 +30,7 @@ const IMAGES = {
 };
 
 /* ─── DATA ────────────────────────────────────────────────── */
-const NAV_LINKS = ["Início", "Serviços", "Diferenciais", "Contato"];
+const NAV_LINKS = ["Início", "Serviços", "Equipe", "Contato"];
 
 const STATS = [
   { value: "BIM", label: "Metodologia de Trabalho" },
