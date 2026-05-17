@@ -169,7 +169,7 @@ function MoodLight() {
   }, []);
 
   return (
-    <div className="fixed bottom-28 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-24 right-6 z-50 flex flex-col items-end gap-3 md:bottom-28">
       <AnimatePresence>
         {open && (
           <motion.div
@@ -414,7 +414,7 @@ export default function App() {
           {/* Scanline sweep */}
           <div className="scanline-overlay z-[1]" />
 
-          <div className="container mx-auto px-6 md:px-16 relative z-10 pt-36 pb-24">
+          <div className="container mx-auto px-5 sm:px-6 md:px-16 relative z-10 pt-28 sm:pt-36 pb-20 sm:pb-24">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -431,15 +431,15 @@ export default function App() {
                 Há +5 Anos no Campo de Batalha Chamado Obra
               </motion.div>
 
-              <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold leading-[1] tracking-[-0.03em] mb-8 whitespace-pre-wrap">
-                <span className="whitespace-nowrap">Projetos de <span className="text-gradient-primary">Engenharia</span></span>
+              <h1 className="font-headline text-[2rem] sm:text-4xl md:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] sm:leading-[1] tracking-[-0.02em] sm:tracking-[-0.03em] mb-6 sm:mb-8">
+                Projetos de <span className="text-gradient-primary">Engenharia</span>
                 <br />
                 Elétrica BIM de
                 <br />
                 Alta Performance
               </h1>
 
-              <p className="text-base md:text-lg text-white/80 max-w-xl mb-12 leading-relaxed font-normal">
+              <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-xl mb-8 sm:mb-12 leading-relaxed font-normal">
                 Compatibilidade, eficiência na execução e desempenho que faz a diferença após a entrega. Projetos que <strong className="text-on-surface font-medium">funcionam de verdade</strong>.
               </p>
 
@@ -495,7 +495,7 @@ export default function App() {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-30"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 opacity-30"
           >
             <div className="w-px h-10 bg-gradient-to-b from-transparent to-on-surface-variant" />
             <span className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-medium">Scroll</span>
@@ -524,13 +524,13 @@ export default function App() {
         </section>
 
         {/* ── STATS ── */}
-        <section className="py-28 bg-surface relative overflow-hidden">
+        <section className="py-16 sm:py-28 bg-surface relative overflow-hidden">
           <div className="container mx-auto px-6 md:px-16">
             <div className="text-center mb-20">
               <motion.span {...fadeUp} className="section-tag justify-center">
                 Nossa Metodologia
               </motion.span>
-              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05]">
+              <motion.h2 {...fadeUp} className="font-headline text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05]">
                 Engenharia elétrica desenvolvida
                 <br />
                 <span className="text-gradient-primary">com rigor técnico e BIM de ponta.</span>
@@ -552,7 +552,7 @@ export default function App() {
                   </span>
 
                   <div className="relative z-10 text-center">
-                    <p className="font-headline text-4xl sm:text-5xl md:text-6xl font-medium text-on-surface mb-3 group-hover:text-primary transition-colors duration-500">
+                    <p className="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-on-surface mb-3 group-hover:text-primary transition-colors duration-500">
                       <AnimatedCounter value={stat.value} />
                     </p>
                     <p className="text-xs font-medium text-on-surface-variant tracking-wide uppercase">
@@ -569,12 +569,12 @@ export default function App() {
         </section>
 
         {/* ── EXPERTISE ── */}
-        <section className="py-28 bg-surface-low relative overflow-hidden">
-          <div className="container mx-auto px-6 md:px-16">
+        <section className="py-16 sm:py-28 bg-surface-low relative overflow-hidden">
+          <div className="container mx-auto px-5 sm:px-6 md:px-16">
             {/* Header */}
             <motion.div {...fadeUp} className="mb-14">
               <span className="section-tag">Expertise</span>
-              <h2 className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05]">
+              <h2 className="font-headline text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05]">
                 Controle em cada
                 <br />
                 <span className="text-gradient-primary">canto do projeto</span>
@@ -945,7 +945,7 @@ export default function App() {
         </section>
 
         {/* ── CTA FINAL ── */}
-        <section className="py-40 bg-surface relative overflow-hidden">
+        <section className="py-20 sm:py-40 bg-surface relative overflow-hidden">
           {/* BG accent */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/[0.04] blur-[120px] rounded-full pointer-events-none" />
 
@@ -956,7 +956,7 @@ export default function App() {
             <span className="section-tag justify-center">
               Precisa de um projeto?
             </span>
-            <h2 className="font-headline text-3xl md:text-5xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05] mb-8">
+            <h2 className="font-headline text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05] mb-6 sm:mb-8">
               Sua obra precisa de <br className="hidden md:block" />
               projetos que <span className="text-gradient-primary">funcionem</span> e <br className="hidden md:block" />
               nossa engenharia garante&nbsp;isso.
@@ -969,7 +969,7 @@ export default function App() {
               target="_blank"
               rel="noreferrer"
               onClick={trackContact}
-              className="btn-primary inline-flex items-center gap-3 px-10 py-5 group text-sm md:text-base"
+              className="btn-primary inline-flex items-center gap-3 px-6 sm:px-10 py-4 sm:py-5 group text-sm md:text-base"
             >
               <img src="/wppblack.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
               Fale no WhatsApp agora
