@@ -34,6 +34,7 @@ import {
   Star,
   Palette,
 } from "lucide-react";
+import { PrivacyPolicyModal } from "./PrivacyPolicyModal";
 
 /* ─── IMAGES ─────────────────────────────────────────────── */
 const IMAGES = {
@@ -279,6 +280,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -1173,15 +1175,23 @@ export default function App() {
             </div>
 
             <div className="flex flex-wrap justify-center gap-8">
-              {["Serviços", "Política de Privacidade"].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="text-on-surface-variant/50 hover:text-on-surface text-xs font-medium tracking-wide transition-colors duration-300"
-                >
-                  {link}
-                </a>
-              ))}
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                className="text-on-surface-variant/50 hover:text-on-surface text-xs font-medium tracking-wide transition-colors duration-300"
+              >
+                Serviços
+              </a>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsPrivacyPolicyOpen(true);
+                }}
+                className="text-on-surface-variant/50 hover:text-on-surface text-xs font-medium tracking-wide transition-colors duration-300"
+              >
+                Política de Privacidade
+              </a>
             </div>
           </div>
         </div>
@@ -1201,6 +1211,12 @@ export default function App() {
       >
         <img src="/wpp.png" alt="WhatsApp" className="w-full h-full object-contain" />
       </a>
+
+      {/* ── PRIVACY POLICY MODAL ── */}
+      <PrivacyPolicyModal
+        isOpen={isPrivacyPolicyOpen}
+        onClose={() => setIsPrivacyPolicyOpen(false)}
+      />
     </div>
   );
 }
