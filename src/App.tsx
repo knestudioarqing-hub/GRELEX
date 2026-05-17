@@ -974,34 +974,177 @@ export default function App() {
         </section>
 
         {/* ── CONTATO ── */}
-        <section id="contato" className="py-16 bg-surface-low border-t border-white/5">
-          <div className="container mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-            <div className="text-left w-full md:w-auto">
-              <h3 className="font-headline text-2xl font-black uppercase tracking-tight mb-2">
+        <section id="contato" className="py-24 bg-surface-low relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-linear-to-r from-primary/60 via-transparent to-transparent" />
+          <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/5 blur-3xl rounded-full pointer-events-none" />
+          <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-primary/5 blur-3xl rounded-full pointer-events-none" />
+
+          <div className="container mx-auto px-6 md:px-16">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <motion.span {...fadeUp} className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
+                Contato
+              </motion.span>
+              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-6xl font-black tracking-tighter">
                 Fale com a gente,
                 <br />
                 <span className="text-gradient-primary">nossa equipe está pronta!</span>
-              </h3>
+              </motion.h2>
             </div>
-            <div className="flex flex-col sm:flex-row gap-6 text-sm text-on-surface-variant">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-primary shrink-0" />
-                <span>Florianópolis, SC</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-primary shrink-0" />
-                <span>+55 55 98122-5699</span>
-              </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+              {/* Form — 3 cols */}
+              <motion.form
+                {...fadeUp}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="lg:col-span-3 flex flex-col gap-5"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const form = e.target as HTMLFormElement;
+                  const nome = (form.elements.namedItem("nome") as HTMLInputElement).value;
+                  const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+                  const whatsapp = (form.elements.namedItem("whatsapp") as HTMLInputElement).value;
+                  const mensagem = (form.elements.namedItem("mensagem") as HTMLTextAreaElement).value;
+                  const text = `Olá! Meu nome é ${nome}.%0AEmail: ${email}%0AWhatsApp: ${whatsapp}%0A%0A${mensagem}`;
+                  window.open(`https://wa.me/5555981225699?text=${text}`, "_blank");
+                }}
+              >
+                {/* Nome */}
+                <div className="relative group">
+                  <input
+                    id="contact-nome"
+                    name="nome"
+                    type="text"
+                    required
+                    placeholder="Seu nome"
+                    className="w-full bg-surface/60 backdrop-blur-md border border-white/10 focus:border-primary/60 outline-none px-5 py-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 transition-all duration-300 rounded-[5px] focus:shadow-[0_0_20px_var(--mood-glow,rgba(255,168,27,0.1))]"
+                  />
+                  <div className="absolute bottom-0 left-0 w-0 group-focus-within:w-full h-[2px] bg-gradient-to-r from-primary via-primary/60 to-transparent transition-all duration-500" />
+                </div>
+
+                {/* Email + WhatsApp row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="relative group">
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="E-mail"
+                      className="w-full bg-surface/60 backdrop-blur-md border border-white/10 focus:border-primary/60 outline-none px-5 py-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 transition-all duration-300 rounded-[5px] focus:shadow-[0_0_20px_var(--mood-glow,rgba(255,168,27,0.1))]"
+                    />
+                    <div className="absolute bottom-0 left-0 w-0 group-focus-within:w-full h-[2px] bg-gradient-to-r from-primary via-primary/60 to-transparent transition-all duration-500" />
+                  </div>
+                  <div className="relative group">
+                    <input
+                      id="contact-whatsapp"
+                      name="whatsapp"
+                      type="tel"
+                      required
+                      placeholder="WhatsApp (com DDD)"
+                      className="w-full bg-surface/60 backdrop-blur-md border border-white/10 focus:border-primary/60 outline-none px-5 py-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 transition-all duration-300 rounded-[5px] focus:shadow-[0_0_20px_var(--mood-glow,rgba(255,168,27,0.1))]"
+                    />
+                    <div className="absolute bottom-0 left-0 w-0 group-focus-within:w-full h-[2px] bg-gradient-to-r from-primary via-primary/60 to-transparent transition-all duration-500" />
+                  </div>
+                </div>
+
+                {/* Mensagem */}
+                <div className="relative group">
+                  <textarea
+                    id="contact-mensagem"
+                    name="mensagem"
+                    required
+                    rows={5}
+                    placeholder="Conte-nos sobre o seu projeto..."
+                    className="w-full bg-surface/60 backdrop-blur-md border border-white/10 focus:border-primary/60 outline-none px-5 py-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 transition-all duration-300 rounded-[5px] resize-none focus:shadow-[0_0_20px_var(--mood-glow,rgba(255,168,27,0.1))]"
+                  />
+                  <div className="absolute bottom-0 left-0 w-0 group-focus-within:w-full h-[2px] bg-gradient-to-r from-primary via-primary/60 to-transparent transition-all duration-500" />
+                </div>
+
+                {/* Submit */}
+                <button
+                  id="contact-submit"
+                  type="submit"
+                  className="btn-primary flex items-center justify-center gap-3 w-full sm:w-auto self-start group text-base"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Enviar via WhatsApp
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                </button>
+              </motion.form>
+
+              {/* Info sidebar — 2 cols */}
+              <motion.div
+                {...fadeUp}
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="lg:col-span-2 flex flex-col gap-6"
+              >
+                {/* Info card */}
+                <div
+                  className="p-8 flex flex-col gap-6 rounded-[5px]"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+                    backdropFilter: "blur(20px)",
+                    WebkitBackdropFilter: "blur(20px)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  <div>
+                    <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-3">Informações</p>
+                    <div className="w-8 h-[2px] bg-primary/40" />
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 flex items-center justify-center border border-white/10 shrink-0 rounded-[5px]">
+                      <MapPin className="w-4 h-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Localização</p>
+                      <p className="text-sm text-on-surface font-medium">Florianópolis, SC</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 flex items-center justify-center border border-white/10 shrink-0 rounded-[5px]">
+                      <Phone className="w-4 h-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Telefone</p>
+                      <p className="text-sm text-on-surface font-medium">+55 55 98122-5699</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 flex items-center justify-center border border-white/10 shrink-0 rounded-[5px]">
+                      <MessageCircle className="w-4 h-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">WhatsApp</p>
+                      <p className="text-sm text-on-surface font-medium">Atendimento direto e rápido</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Direct WhatsApp CTA */}
+                <a
+                  href="https://wa.me/5555981225699"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-primary flex items-center justify-center gap-3 w-full text-base"
+                >
+                  <img src="https://i.imgur.com/rZwZ6jL.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
+                  Falar direto no WhatsApp
+                </a>
+
+                {/* Trust badge */}
+                <div className="text-center py-4 border border-white/5 rounded-[5px]">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant">
+                    ⚡ Resposta em até <span className="text-primary">2 horas</span> úteis
+                  </p>
+                </div>
+              </motion.div>
             </div>
-            <a
-              href="https://wa.me/5555981225699"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-primary flex items-center gap-2"
-            >
-              <img src="https://i.imgur.com/rZwZ6jL.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
-              WhatsApp
-            </a>
           </div>
         </section>
       </main>
