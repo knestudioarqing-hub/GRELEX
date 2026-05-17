@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-headline: "Space Grotesk", sans-serif;
+  --font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-headline: "Inter", sans-serif;
 
   /* Accent */
   --color-primary: #FFA81B;
 
-  /* Backgrounds */
-  --color-surface:         #111111;
-  --color-surface-low:     #181817;
-  --color-surface-high:    #252524;
-  --color-surface-highest: #5C5C5B;
+  /* Backgrounds — deeper blacks like insightsapps */
+  --color-surface:         #080808;
+  --color-surface-low:     #0e0e0e;
+  --color-surface-high:    #1a1a1a;
+  --color-surface-highest: #2a2a2a;
 
-  /* Textos */
-  --color-on-surface:         #DCDCDC;
-  --color-on-surface-variant: #9F9B96;
+  /* Textos — brighter whites for contrast */
+  --color-on-surface:         #f0f0f0;
+  --color-on-surface-variant: #888888;
 
   --radius-none: 0px;
   --radius-sm: 0px;
@@ -31,11 +31,17 @@
 @layer base {
   body {
     @apply bg-surface text-on-surface antialiased selection:bg-primary/30;
-    /* Subtle noise texture */
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   ::selection {
-    color: #111111;
+    color: #080808;
+  }
+  
+  /* Smoother scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 }
 
@@ -47,21 +53,49 @@
     @apply bg-linear-to-br from-[#FFA81B] to-[#FFD07A] bg-clip-text text-transparent;
   }
 
-  /* ── CTA Button — animated shimmer border ── */
+  /* ── Section overline tag (→ LABEL style like insightsapps) ── */
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+    margin-bottom: 1.5rem;
+  }
+  .section-tag::before {
+    content: "→";
+    color: var(--color-primary);
+    font-size: 14px;
+  }
+
+  /* ── CTA Button — pill style with refined glow (insightsapps) ── */
   .btn-primary {
-    @apply relative px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm font-bold uppercase tracking-wider
-           transition-all duration-300 active:scale-[0.98] rounded-[5px]
-           text-center justify-center flex items-center gap-2 overflow-hidden;
-    /* Shimmer sweep on hover via pseudo */
+    @apply relative px-8 py-4 text-sm font-semibold
+           transition-all duration-500 active:scale-[0.97]
+           text-center justify-center flex items-center gap-2.5 overflow-hidden;
+    background: var(--color-primary);
+    color: #080808;
+    border-radius: 100px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 0 30px rgba(255, 168, 27, 0.2), 0 4px 20px rgba(255, 168, 27, 0.15);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 50px rgba(255, 168, 27, 0.35), 0 8px 30px rgba(255, 168, 27, 0.25);
+    transform: translateY(-2px);
   }
   .btn-primary::before {
     content: "";
     position: absolute;
     inset: 0;
+    border-radius: inherit;
     background: linear-gradient(
       115deg,
       transparent 30%,
-      rgba(255, 168, 27, 0.15) 50%,
+      rgba(255, 255, 255, 0.2) 50%,
       transparent 70%
     );
     background-size: 200% 100%;
@@ -73,31 +107,47 @@
     background-position: -100% 0;
   }
 
-  /* ── Glass panel ── */
-  .glass-panel {
-    background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.3);
+  /* ── Secondary CTA — outline ghost pill ── */
+  .btn-secondary {
+    @apply relative px-8 py-4 text-sm font-semibold
+           transition-all duration-400 active:scale-[0.97]
+           text-center justify-center flex items-center gap-2.5;
+    color: var(--color-on-surface);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+    background: transparent;
+    letter-spacing: 0.02em;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
   }
 
-  /* ── Tech card ── */
+  /* ── Glass panel (refined) ── */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ── Tech card (refined borders) ── */
   .card-tech {
     position: relative;
-    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: border-color 0.3s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: border-color 0.4s ease, box-shadow 0.5s ease, transform 0.4s ease;
   }
   .card-tech:hover {
-    border-color: rgba(var(--color-primary-rgb, 255, 168, 27), 0.3);
+    border-color: rgba(255, 168, 27, 0.2);
     box-shadow:
-      0 0 0 1px rgba(255,168,27,0.08),
-      0 12px 40px rgba(0,0,0,0.4),
-      0 0 60px rgba(255,168,27,0.04);
-    transform: translateY(-2px);
+      0 12px 40px rgba(0, 0, 0, 0.5),
+      0 0 60px rgba(255, 168, 27, 0.05);
+    transform: translateY(-3px);
   }
 
   /* ── Corner brackets decorators ── */
@@ -129,7 +179,7 @@
   .corner-mark:hover::after {
     opacity: 1;
   }
-  /* Second pair of corners via inner span — used with JS or pseudo wrapper */
+  /* Full corner marks */
   .corner-mark-full {
     position: relative;
   }
@@ -194,10 +244,10 @@
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(255, 168, 27, 0.03) 50%,
+      rgba(255, 168, 27, 0.02) 50%,
       transparent 100%
     );
-    animation: scanline 8s linear infinite;
+    animation: scanline 10s linear infinite;
     pointer-events: none;
   }
 
@@ -213,21 +263,21 @@
     flex-shrink: 0;
   }
 
-  /* ── Gradient border input focus ── */
+  /* ── Input tech (refined) ── */
   .input-tech {
     position: relative;
-    background: rgba(17,17,17,0.6);
+    background: rgba(8, 8, 8, 0.6);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .input-tech:focus {
-    border-color: rgba(255,168,27,0.5);
+    border-color: rgba(255,168,27,0.4);
     box-shadow:
-      0 0 0 3px rgba(255,168,27,0.06),
-      0 0 20px rgba(255,168,27,0.08);
+      0 0 0 3px rgba(255,168,27,0.05),
+      0 0 20px rgba(255,168,27,0.06);
   }
 
   /* ── Horizontal divider with glow ── */
@@ -236,11 +286,27 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255,168,27,0.4) 30%,
-      rgba(255,168,27,0.6) 50%,
-      rgba(255,168,27,0.4) 70%,
+      rgba(255,168,27,0.3) 30%,
+      rgba(255,168,27,0.5) 50%,
+      rgba(255,168,27,0.3) 70%,
       transparent 100%
     );
+  }
+
+  /* ── Navbar pill (insightsapps style) ── */
+  .nav-pill {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 100px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav-pill.scrolled {
+    background: rgba(8, 8, 8, 0.85);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
   }
 }
 

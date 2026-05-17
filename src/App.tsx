@@ -122,7 +122,6 @@ function applyMood(mood: Mood) {
   root.style.setProperty("--color-primary", mood.primary);
   root.style.setProperty("--mood-secondary", mood.secondary);
   root.style.setProperty("--mood-glow", mood.glow);
-  // Rebuild gradient classes that use hardcoded hex in @layer components
   let styleEl = document.getElementById("mood-style") as HTMLStyleElement | null;
   if (!styleEl) {
     styleEl = document.createElement("style");
@@ -137,21 +136,16 @@ function applyMood(mood: Mood) {
       background-clip: text !important;
     }
     .btn-primary {
-      background: linear-gradient(135deg, ${mood.primary}20, transparent) !important;
-      backdrop-filter: blur(12px) !important;
-      -webkit-backdrop-filter: blur(12px) !important;
-      border: 1px solid ${mood.primary}40 !important;
-      color: ${mood.primary} !important;
-      box-shadow: 0 0 20px ${mood.glow}, inset 0 0 10px ${mood.glow} !important;
-      text-shadow: 0 0 8px ${mood.glow} !important;
+      background: ${mood.primary} !important;
+      color: #080808 !important;
+      box-shadow: 0 0 30px ${mood.glow}, 0 4px 20px ${mood.glow} !important;
     }
     .btn-primary:hover {
-      background: linear-gradient(135deg, ${mood.primary}40, ${mood.primary}10) !important;
-      border-color: ${mood.primary}80 !important;
-      color: #fff !important;
-      box-shadow: 0 0 30px ${mood.primary}40, inset 0 0 20px ${mood.primary}40 !important;
-      text-shadow: 0 0 10px ${mood.primary} !important;
+      box-shadow: 0 0 50px ${mood.primary}50, 0 8px 30px ${mood.primary}35 !important;
       transform: translateY(-2px);
+    }
+    .section-tag::before {
+      color: ${mood.primary} !important;
     }
   `;
 }
@@ -299,67 +293,62 @@ export default function App() {
 
   return (
     <div className="flex flex-col min-h-screen bg-surface font-sans overflow-x-hidden">
-      {/* ── NAVBAR ── */}
-      <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-[#0d0d0d]/95 backdrop-blur-xl py-4"
-            : "bg-transparent py-6"
-        } px-6 md:px-16 flex items-center justify-between`}
-        style={scrolled ? {
-          boxShadow: "0 1px 0 rgba(255,168,27,0.12), 0 8px 32px rgba(0,0,0,0.5)",
-        } : undefined}
-      >
-        <a href="#inicio" className="flex items-center gap-3 group">
-          <img
-            src="https://i.imgur.com/DWraQLz.png"
-            alt="Grelex Engenharia Elétrica"
-            className="h-10 w-auto object-contain transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(255,168,27,0.6)]"
-            loading="eager"
-            decoding="async"
-          />
-          <span className="w-px h-6 bg-white/15" />
-          <span style={{ fontFamily: "'Poppins', sans-serif" }} className="text-white font-medium text-lg uppercase tracking-tighter">
-            GRELEX
-          </span>
-        </a>
-
-        <div className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link, i) => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}`}
-              className={`font-headline text-sm font-bold uppercase tracking-tight transition-all duration-200 relative group ${
-                i === 0 ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
-              }`}
-            >
-              {link}
-              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
-            </a>
-          ))}
-        </div>
-
-        <div className="hidden md:flex items-center gap-3">
-          <a
-            href="https://wa.me/5555981225699"
-            target="_blank"
-            rel="noreferrer"
-            onClick={trackContact}
-            className="btn-primary flex items-center gap-2 text-sm py-3 px-6"
-          >
-            <MessageCircle className="w-4 h-4" />
-            Fale no WhatsApp
-          </a>
-        </div>
-
-        <button
-          id="mobile-menu-btn"
-          className="md:hidden p-2"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label="Menu"
+      {/* ── NAVBAR — pill glassmorphic (insightsapps style) ── */}
+      <nav className="fixed top-0 left-0 w-full z-50 px-4 md:px-8 pt-4 md:pt-5">
+        <div
+          className={`nav-pill ${scrolled ? "scrolled" : ""} max-w-5xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between`}
         >
-          {menuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-        </button>
+          <a href="#inicio" className="flex items-center gap-2.5 group shrink-0">
+            <img
+              src="https://i.imgur.com/DWraQLz.png"
+              alt="Grelex Engenharia Elétrica"
+              className="h-8 w-auto object-contain transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(255,168,27,0.6)]"
+              loading="eager"
+              decoding="async"
+            />
+            <span className="w-px h-5 bg-white/10" />
+            <span className="font-headline text-white/90 font-semibold text-sm uppercase tracking-tight">
+              GRELEX
+            </span>
+          </a>
+
+          <div className="hidden md:flex items-center gap-7">
+            {NAV_LINKS.map((link, i) => (
+              <a
+                key={link}
+                href={`#${link.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}`}
+                className={`text-[13px] font-medium tracking-wide transition-all duration-300 relative group ${
+                  i === 0 ? "text-on-surface" : "text-on-surface-variant hover:text-on-surface"
+                }`}
+              >
+                {link}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-primary group-hover:w-full transition-all duration-400 ease-out" />
+              </a>
+            ))}
+          </div>
+
+          <div className="hidden md:flex items-center">
+            <a
+              href="https://wa.me/5555981225699"
+              target="_blank"
+              rel="noreferrer"
+              onClick={trackContact}
+              className="btn-primary text-xs py-2.5 px-5 gap-2"
+            >
+              <img src="/wpp.png" alt="WhatsApp" className="w-3.5 h-3.5 object-contain" />
+              Fale no WhatsApp
+            </a>
+          </div>
+
+          <button
+            id="mobile-menu-btn"
+            className="md:hidden p-2 text-on-surface-variant hover:text-on-surface transition-colors"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Menu"
+          >
+            {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
@@ -375,7 +364,7 @@ export default function App() {
               <a
                 key={link}
                 href={`#${link.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}`}
-                className="font-headline text-3xl font-black uppercase tracking-tight text-on-surface hover:text-primary transition-colors"
+                className="font-headline text-3xl font-bold uppercase tracking-tight text-on-surface hover:text-primary transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
                 {link}
@@ -388,7 +377,7 @@ export default function App() {
               onClick={trackContact}
               className="btn-primary flex items-center gap-2 mt-4"
             >
-              <MessageCircle className="w-4 h-4" />
+              <img src="/wpp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
               Fale no WhatsApp
             </a>
           </motion.div>
@@ -403,92 +392,95 @@ export default function App() {
             <img
               src={IMAGES.HERO}
               alt="Infraestrutura elétrica industrial"
-              className="w-full h-full object-cover opacity-60 grayscale-[0.3]"
+              className="w-full h-full object-cover opacity-90 grayscale-[0.1]"
               referrerPolicy="no-referrer"
               loading="eager"
               fetchPriority="high"
               decoding="async"
             />
-            <div className="absolute inset-0 bg-linear-to-r from-surface via-surface/50 to-transparent" />
-            <div className="absolute inset-0 bg-linear-to-t from-surface via-transparent to-surface/20" />
+            <div className="absolute inset-0 bg-linear-to-r from-surface/80 via-surface/30 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-surface via-surface/50 to-transparent" />
           </div>
 
-          {/* Decorative grid */}
-          <div className="absolute inset-0 z-0 opacity-[0.06]"
+          {/* Decorative grid — subtler */}
+          <div className="absolute inset-0 z-0 opacity-[0.03]"
             style={{
-              backgroundImage: "linear-gradient(rgba(255,168,27,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,168,27,0.3) 1px, transparent 1px)",
-              backgroundSize: "80px 80px",
+              backgroundImage: "linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)",
+              backgroundSize: "100px 100px",
             }}
           />
-          {/* Radial vignette over grid */}
-          <div className="absolute inset-0 z-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 70% at 20% 50%, transparent 0%, #111111 100%)" }} />
+          {/* Radial vignette */}
+          <div className="absolute inset-0 z-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 80% at 30% 50%, transparent 40%, rgba(8,8,8,0.8) 100%)" }} />
           {/* Scanline sweep */}
           <div className="scanline-overlay z-[1]" />
 
-          <div className="container mx-auto px-6 md:px-16 relative z-10 pt-32 pb-24">
+          <div className="container mx-auto px-6 md:px-16 relative z-10 pt-36 pb-24">
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
+              initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="max-w-4xl"
             >
-              {/* Badge */}
+              {/* Badge — → style like insightsapps */}
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-flex items-center gap-2.5 border border-primary/30 bg-primary/8 px-4 py-2 mb-8"
-                style={{ boxShadow: "0 0 20px rgba(255,168,27,0.08), inset 0 0 20px rgba(255,168,27,0.04)" }}
+                className="section-tag mb-10 !text-white/80"
               >
-                <span className="glow-dot" />
-                <span className="tag-mono text-primary">
-                  Há +5 Anos no Campo de Batalha Chamado Obra
-                </span>
+                Há +5 Anos no Campo de Batalha Chamado Obra
               </motion.div>
 
-              <h1 className="font-headline text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.92] tracking-tighter mb-8">
-                Projetos de{" "}
-                <span className="text-gradient-primary">Engenharia</span>
+              <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold leading-[1] tracking-[-0.03em] mb-8 whitespace-pre-wrap">
+                <span className="whitespace-nowrap">Projetos de <span className="text-gradient-primary">Engenharia</span></span>
                 <br />
                 Elétrica BIM de
                 <br />
                 Alta Performance
               </h1>
 
-              <p className="text-base md:text-xl text-on-surface-variant max-w-2xl mb-10 leading-relaxed font-medium">
-                Compatibilidade, eficiência na execução e desempenho que faz a diferença após a entrega. Projetos que <strong className="text-on-surface">funcionam de verdade</strong>.
+              <p className="text-base md:text-lg text-white/80 max-w-xl mb-12 leading-relaxed font-normal">
+                Compatibilidade, eficiência na execução e desempenho que faz a diferença após a entrega. Projetos que <strong className="text-on-surface font-medium">funcionam de verdade</strong>.
               </p>
 
+              {/* Dual CTA — primary + secondary ghost */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
                   href="https://wa.me/5555981225699"
                   target="_blank"
                   rel="noreferrer"
                   onClick={trackContact}
-                  className="btn-primary flex items-center justify-center gap-3 text-base"
+                  className="btn-primary flex items-center justify-center gap-3 text-sm"
                 >
-                  <MessageCircle className="w-5 h-5" />
-                  Fale com a gente!
+                  <img src="/wpp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
+                  Fale com a gente
+                </a>
+                <a
+                  href="#servicos"
+                  className="btn-secondary flex items-center justify-center gap-3 text-sm"
+                >
+                  Conheça nossos serviços
+                  <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </motion.div>
 
-            {/* Floating stat card */}
+            {/* Floating stat card — refined */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="hidden lg:flex absolute right-16 top-1/2 -translate-y-1/2 glass-panel p-8 flex-col gap-6 w-72 corner-mark-full"
-              style={{ animation: "float 6s ease-in-out infinite", animationDelay: "1s" }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="hidden lg:flex absolute right-16 top-1/2 -translate-y-1/2 glass-panel p-7 flex-col gap-5 w-64"
+              style={{ animation: "float 6s ease-in-out infinite", animationDelay: "1s", borderRadius: "16px" }}
             >
               {/* Top label */}
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-1">
                 <span className="glow-dot" style={{ width: "5px", height: "5px" }} />
                 <span className="tag-mono text-on-surface-variant">sistema // ativo</span>
               </div>
               {STATS.slice(0, 2).map((s) => (
-                <div key={s.label} className="border-l-2 border-primary/60 pl-4 group">
-                  <p className="font-headline text-3xl font-black text-primary drop-shadow-[0_0_12px_rgba(255,168,27,0.3)]">
+                <div key={s.label} className="border-l-2 border-primary/40 pl-4 group">
+                  <p className="font-headline text-2xl font-medium text-primary">
                     <AnimatedCounter value={s.value} />
                   </p>
                   <p className="tag-mono text-on-surface-variant mt-1">
@@ -502,109 +494,74 @@ export default function App() {
           {/* Scroll indicator */}
           <motion.div
             animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-40"
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-30"
           >
-            <div className="w-px h-10 bg-on-surface-variant" />
-            <span className="text-[10px] uppercase tracking-widest text-on-surface-variant">Scroll</span>
+            <div className="w-px h-10 bg-gradient-to-b from-transparent to-on-surface-variant" />
+            <span className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-medium">Scroll</span>
           </motion.div>
         </section>
 
         {/* ── TRUST BAR ── */}
         <section 
-          className="py-8 overflow-hidden border-y border-white/5 relative"
+          className="py-6 overflow-hidden border-y border-white/[0.04] relative"
           style={{
-            background: "linear-gradient(90deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.01) 100%)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
-            boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.05)",
+            background: "rgba(255,255,255,0.01)",
           }}
         >
-          <div className="absolute inset-0 bg-primary/5 pointer-events-none" />
-          <div className="flex gap-16 pr-16 animate-[marquee_20s_linear_infinite] whitespace-nowrap w-max relative z-10">
+          <div className="flex gap-12 pr-12 animate-[marquee_25s_linear_infinite] whitespace-nowrap w-max relative z-10">
             {[...Array(4)].flatMap(() => [
               "Revit MEP", "NR-34", "ABNT NBR 5419", "NR-10", "IEC 60364", "Dialux Evo", "Navisworks", "BIM Collaborate"
             ]).map((name, i) => (
-              <span key={i} className="text-primary font-black uppercase tracking-widest text-sm drop-shadow-[0_0_12px_var(--mood-glow,rgba(255,168,27,0.4))]">
-                {name}
+              <span key={i} className="flex items-center gap-12">
+                <span className="text-on-surface-variant/60 font-semibold uppercase tracking-[0.2em] text-xs">
+                  {name}
+                </span>
+                <span className="w-1 h-1 rounded-full bg-primary/40" />
               </span>
             ))}
           </div>
         </section>
 
         {/* ── STATS ── */}
-        <section className="py-24 bg-surface-low relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-linear-to-r from-primary/60 via-transparent to-transparent" />
-
+        <section className="py-28 bg-surface relative overflow-hidden">
           <div className="container mx-auto px-6 md:px-16">
-            <div className="text-center mb-16">
-              <motion.span {...fadeUp} className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
+            <div className="text-center mb-20">
+              <motion.span {...fadeUp} className="section-tag justify-center">
                 Nossa Metodologia
               </motion.span>
-              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-6xl font-black tracking-tighter">
+              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05]">
                 Engenharia elétrica desenvolvida
                 <br />
                 <span className="text-gradient-primary">com rigor técnico e BIM de ponta.</span>
               </motion.h2>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.04]">
               {STATS.map((stat, i) => (
                 <motion.div
                   key={i}
                   {...fadeUp}
                   transition={{ duration: 0.7, delay: i * 0.1 }}
-                  whileHover={{ y: -4 }}
-                  className="relative h-56 flex flex-col items-center justify-center p-8 group overflow-hidden cursor-default corner-mark-full"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 60%, rgba(255,255,255,0.03) 100%)",
-                    backdropFilter: "blur(20px)",
-                    WebkitBackdropFilter: "blur(20px)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.3)",
-                    transition: "border-color 0.4s, box-shadow 0.4s",
-                  }}
+                  whileHover={{ backgroundColor: "rgba(255,255,255,0.03)" }}
+                  className="relative h-48 md:h-56 flex flex-col items-center justify-center p-6 bg-surface group cursor-default transition-all duration-500"
                 >
-                  {/* Index number — top left */}
-                  <span className="absolute top-4 left-4 tag-mono text-on-surface-variant/30 group-hover:text-primary/40 transition-colors duration-500">
+                  {/* Index number */}
+                  <span className="absolute top-4 left-5 text-[11px] font-medium text-on-surface-variant/25 group-hover:text-primary/40 transition-colors duration-500 tracking-wider">
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
-                  {/* Glass highlight */}
-                  <div
-                    className="absolute top-0 left-0 w-full h-1/3 pointer-events-none"
-                    style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%)" }}
-                  />
-
-                  {/* Hover glow radial */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-600 pointer-events-none"
-                    style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(255,168,27,0.1) 0%, transparent 70%)" }}
-                  />
-
-                  {stat.label === "Modelagem em Revit MEP" && (
-                    <img
-                      src={IMAGES.STATS}
-                      className="absolute inset-0 w-full h-full object-cover opacity-[0.05] grayscale"
-                      referrerPolicy="no-referrer"
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  )}
-
                   <div className="relative z-10 text-center">
-                    <p className="font-headline text-4xl sm:text-5xl font-black text-primary mb-3"
-                      style={{ textShadow: "0 0 20px rgba(255,168,27,0.25)" }}>
+                    <p className="font-headline text-4xl sm:text-5xl md:text-6xl font-medium text-on-surface mb-3 group-hover:text-primary transition-colors duration-500">
                       <AnimatedCounter value={stat.value} />
                     </p>
-                    <p className="tag-mono text-on-surface-variant">
+                    <p className="text-xs font-medium text-on-surface-variant tracking-wide uppercase">
                       {stat.label}
                     </p>
                   </div>
 
-                  {/* Bottom scan bar on hover */}
-                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent transition-all duration-700" />
+                  {/* Bottom accent on hover */}
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 group-hover:w-12 h-[2px] bg-primary transition-all duration-500 rounded-full" />
                 </motion.div>
               ))}
             </div>
@@ -612,16 +569,12 @@ export default function App() {
         </section>
 
         {/* ── EXPERTISE ── */}
-        <section className="py-24 bg-surface-low relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-linear-to-r from-primary/60 via-transparent to-transparent" />
-
+        <section className="py-28 bg-surface-low relative overflow-hidden">
           <div className="container mx-auto px-6 md:px-16">
             {/* Header */}
-            <motion.div {...fadeUp} className="mb-12">
-              <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
-                Expertise
-              </span>
-              <h2 className="font-headline text-3xl md:text-6xl font-black tracking-tighter leading-none">
+            <motion.div {...fadeUp} className="mb-14">
+              <span className="section-tag">Expertise</span>
+              <h2 className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05]">
                 Controle em cada
                 <br />
                 <span className="text-gradient-primary">canto do projeto</span>
@@ -632,10 +585,10 @@ export default function App() {
             <motion.div
               {...fadeUp}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 mb-12 md:aspect-[8/3]"
+              className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-2 mb-14 md:aspect-[8/3]"
             >
               {/* Large image */}
-              <div className="md:col-span-2 md:row-span-2 relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto group">
+              <div className="md:col-span-2 md:row-span-2 relative overflow-hidden border border-white/[0.06] rounded-xl aspect-video md:aspect-auto group">
                 <img
                   src="https://i.imgur.com/axJZsyU.png"
                   alt="Modelagem BIM 3D — visão geral do proyecto"
@@ -643,11 +596,11 @@ export default function App() {
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/40 to-transparent pointer-events-none" />
               </div>
 
               {/* Top small image */}
-              <div className="relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto group">
+              <div className="relative overflow-hidden border border-white/[0.06] rounded-xl aspect-video md:aspect-auto group">
                 <img
                   src="https://i.imgur.com/mFSHBAo.png"
                   alt="Detalhe BIM — quadro elétrico"
@@ -655,11 +608,11 @@ export default function App() {
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/40 to-transparent pointer-events-none" />
               </div>
 
               {/* Bottom small image */}
-              <div className="relative overflow-hidden border border-white/10 rounded-[5px] aspect-video md:aspect-auto group">
+              <div className="relative overflow-hidden border border-white/[0.06] rounded-xl aspect-video md:aspect-auto group">
                 <img
                   src="https://i.imgur.com/x2Yy1AQ.png"
                   alt="Detalhe BIM — compatibilización de sistemas"
@@ -667,7 +620,7 @@ export default function App() {
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/40 to-transparent pointer-events-none" />
               </div>
             </motion.div>
 
@@ -675,10 +628,10 @@ export default function App() {
             <motion.p
               {...fadeUp}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-on-surface-variant text-lg leading-relaxed max-w-3xl"
+              className="text-on-surface-variant text-base md:text-lg leading-relaxed max-w-3xl"
             >
-              Nossa metodologia utiliza tecnologia <strong className="text-on-surface">BIM</strong> (Building Information Modeling) de ponta para garantir o
-              monitoramento integral de todos os sistemas. Com <strong className="text-on-surface">visualizações tridimensionais</strong> detalhadas, eliminamos
+              Nossa metodologia utiliza tecnologia <strong className="text-on-surface font-medium">BIM</strong> (Building Information Modeling) de ponta para garantir o
+              monitoramento integral de todos os sistemas. Com <strong className="text-on-surface font-medium">visualizações tridimensionais</strong> detalhadas, eliminamos
               interferências antes da obra começar, assegurando que cada milímetro do projeto esteja sob total controle
               técnico.
             </motion.p>
@@ -686,18 +639,16 @@ export default function App() {
         </section>
 
         {/* ── REFERÊNCIA ── */}
-        <section className="py-24 bg-surface relative">
+        <section className="py-28 bg-surface relative">
           <div className="container mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div {...fadeUp}>
-              <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
-                Quem somos
-              </span>
-              <h2 className="font-headline text-3xl md:text-6xl font-black tracking-tighter leading-none mb-8">
+              <span className="section-tag">Quem somos</span>
+              <h2 className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05] mb-8">
                 Time especializado em BIM Elétrico, desenvolvendo projetos com
                 <span className="text-gradient-primary"> precisão técnica e compatibilidade total</span>
               </h2>
-              <p className="text-on-surface-variant text-lg leading-relaxed mb-8">
-                Nossa equipe trabalha com <strong className="text-on-surface">metodologia BIM</strong> aplicada exclusivamente a sistemas elétricos — modelando, compatibilizando e entregando projetos prontos para a obra, com total conformidade às normas ABNT.
+              <p className="text-on-surface-variant text-base md:text-lg leading-relaxed mb-10">
+                Nossa equipe trabalha com <strong className="text-on-surface font-medium">metodologia BIM</strong> aplicada exclusivamente a sistemas elétricos — modelando, compatibilizando e entregando projetos prontos para a obra, com total conformidade às normas ABNT.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
@@ -705,9 +656,9 @@ export default function App() {
                   target="_blank"
                   rel="noreferrer"
                   onClick={trackContact}
-                  className="btn-primary flex items-center gap-2"
+                  className="btn-primary flex items-center gap-2 text-sm"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <img src="/wpp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
                   Fale com a gente
                 </a>
               </div>
@@ -718,7 +669,7 @@ export default function App() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative aspect-[4/3] overflow-hidden border border-white/10 group">
+              <div className="relative aspect-[4/3] overflow-hidden border border-white/[0.06] rounded-xl group">
                 <img
                    src="https://i.imgur.com/qydWXJR.jpg"
                    alt="Modelagem BIM 3D"
@@ -726,12 +677,12 @@ export default function App() {
                    loading="lazy"
                    decoding="async"
                  />
-                <div className="absolute inset-0 bg-linear-to-t from-surface/60 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-surface/50 to-transparent" />
 
                 {/* Overlay card */}
-                <div className="absolute bottom-6 left-6 glass-panel px-6 py-4 border-l-4 border-primary">
-                  <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Status do Sistema</p>
-                  <p className="font-headline text-2xl font-black">Zero Conflitos</p>
+                <div className="absolute bottom-6 left-6 glass-panel px-5 py-3 rounded-lg border-l-2 border-primary">
+                  <p className="text-[10px] font-medium text-primary uppercase tracking-[0.15em] mb-1">Status do Sistema</p>
+                  <p className="font-headline text-xl font-medium">Zero Conflitos</p>
                 </div>
               </div>
 
@@ -743,15 +694,15 @@ export default function App() {
         </section>
 
         {/* ── TESTIMONIALS ── */}
-        <section id="diferenciais" className="py-24 bg-surface-low relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-3xl pointer-events-none" />
+        <section id="diferenciais" className="py-28 bg-surface-low relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/[0.03] blur-3xl pointer-events-none" />
 
           <div className="container mx-auto px-6 md:px-16">
-            <div className="text-center mb-16">
-              <motion.span {...fadeUp} className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
+            <div className="text-center mb-20">
+              <motion.span {...fadeUp} className="section-tag justify-center">
                 Por que a Grelex?
               </motion.span>
-              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-6xl font-black tracking-tighter">
+              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em]">
                 Nossos diferenciais em BIM Elétrico
               </motion.h2>
             </div>
@@ -763,36 +714,36 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-surface border border-white/5 p-6 sm:p-10 md:p-14 border-l-4 border-l-primary text-center"
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="bg-surface/50 border border-white/[0.05] p-8 sm:p-12 md:p-16 rounded-2xl text-center"
                 >
                   {/* Stars */}
-                  <div className="flex justify-center gap-1 mb-6">
+                  <div className="flex justify-center gap-1 mb-8">
                     {Array.from({ length: TESTIMONIALS[activeTestimonial].stars }).map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                     ))}
                   </div>
 
-                  <p className="font-headline text-base sm:text-xl md:text-3xl font-black leading-snug mb-8 text-on-surface">
+                  <p className="font-headline text-base sm:text-xl md:text-2xl font-normal leading-relaxed mb-8 text-on-surface">
                     &ldquo;{TESTIMONIALS[activeTestimonial].quote}&rdquo;
                   </p>
 
                   <div>
-                    <p className="font-bold text-on-surface">{TESTIMONIALS[activeTestimonial].name}</p>
+                    <p className="font-medium text-on-surface">{TESTIMONIALS[activeTestimonial].name}</p>
                     <p className="text-sm text-on-surface-variant mt-1">{TESTIMONIALS[activeTestimonial].role}</p>
                   </div>
                 </motion.div>
               </AnimatePresence>
 
               {/* Navigation */}
-              <div className="flex items-center justify-center gap-6 mt-8">
+              <div className="flex items-center justify-center gap-6 mt-10">
                 <button
                   id="testimonial-prev"
                   onClick={prevTestimonial}
-                  className="w-12 h-12 border border-white/10 flex items-center justify-center hover:border-primary hover:text-primary transition-colors"
+                  className="w-10 h-10 rounded-full border border-white/[0.08] flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300"
                   aria-label="Anterior"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-4 h-4" />
                 </button>
 
                 <div className="flex gap-2">
@@ -800,7 +751,7 @@ export default function App() {
                     <button
                       key={i}
                       onClick={() => setActiveTestimonial(i)}
-                      className={`transition-all duration-300 ${i === activeTestimonial ? "w-8 h-2 bg-primary" : "w-2 h-2 bg-white/20 hover:bg-white/40"}`}
+                      className={`transition-all duration-300 rounded-full ${i === activeTestimonial ? "w-8 h-2 bg-primary" : "w-2 h-2 bg-white/15 hover:bg-white/30"}`}
                       aria-label={`Depoimento ${i + 1}`}
                     />
                   ))}
@@ -809,10 +760,10 @@ export default function App() {
                 <button
                   id="testimonial-next"
                   onClick={nextTestimonial}
-                  className="w-12 h-12 border border-white/10 flex items-center justify-center hover:border-primary hover:text-primary transition-colors"
+                  className="w-10 h-10 rounded-full border border-white/[0.08] flex items-center justify-center hover:border-primary/40 hover:text-primary transition-all duration-300"
                   aria-label="Próximo"
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -820,12 +771,12 @@ export default function App() {
         </section>
 
         {/* ── PORTFOLIO ── */}
-        <section id="servicos" className="py-24 bg-surface">
+        <section id="servicos" className="py-28 bg-surface">
           <div className="container mx-auto px-6 md:px-16">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
               <motion.div {...fadeUp}>
-                <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Especialidades</span>
-                <h2 className="font-headline text-3xl md:text-6xl font-black tracking-tighter leading-none">
+                <span className="section-tag">Especialidades</span>
+                <h2 className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05]">
                   Nossas disciplinas
                   <br />
                   <span className="text-gradient-primary">em BIM Elétrico</span>
@@ -834,7 +785,7 @@ export default function App() {
               <motion.a
                 {...fadeUp}
                 href="#especialidades"
-                className="flex items-center gap-2 text-primary font-bold uppercase tracking-widest text-sm hover:gap-4 transition-all"
+                className="flex items-center gap-2 text-on-surface-variant hover:text-primary font-medium text-sm hover:gap-3 transition-all duration-300"
               >
                 Conheça nossas soluções
                 <ArrowRight className="w-4 h-4" />
@@ -860,7 +811,7 @@ export default function App() {
                   <div className="absolute inset-0 bg-linear-to-t from-surface via-surface/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                     <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">{p.type}</p>
-                    <p className="font-headline text-lg font-black">{p.name}</p>
+                    <p className="font-headline text-lg font-medium">{p.name}</p>
                   </div>
                   <div className="absolute top-4 right-4 w-8 h-8 border border-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <ArrowRight className="w-4 h-4 text-primary" />
@@ -872,12 +823,12 @@ export default function App() {
         </section>
 
         {/* ── SERVICES ── */}
-        <section id="especialidades" className="py-24 bg-surface-low">
+        <section id="especialidades" className="py-28 bg-surface-low">
           <div className="container mx-auto px-6 md:px-16">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
               <motion.div {...fadeUp}>
-                <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Especialidades</span>
-                <h2 className="font-headline text-3xl md:text-6xl font-black tracking-tighter leading-none">
+                <span className="section-tag">Especialidades</span>
+                <h2 className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] leading-[1.05]">
                   Nós podemos te ajudar
                   <br />
                   com <span className="text-gradient-primary">engenharia</span>
@@ -887,62 +838,56 @@ export default function App() {
               </motion.div>
               <motion.p
                 {...fadeUp}
-                className="text-on-surface-variant max-w-sm text-sm border-l-2 border-white/10 pl-6 py-2 leading-relaxed"
+                className="text-on-surface-variant max-w-sm text-sm border-l border-white/[0.08] pl-6 py-2 leading-relaxed"
               >
                 Engenharia de alta performance em projetos de instalações prediais. Da modelagem BIM à compatibilização, entregamos projetos prontos para a obra.
               </motion.p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {SERVICES.map((svc, i) => (
                 <motion.div
                   key={i}
                   {...fadeUp}
                   transition={{ duration: 0.6, delay: i * 0.08 }}
-                  whileHover={{ x: 4 }}
-                  className="relative bg-surface p-10 border-l-2 border-transparent hover:border-primary transition-all duration-400 group overflow-hidden corner-mark-full"
-                  style={{ transition: "border-color 0.3s, background 0.4s" }}
+                  className="relative bg-surface p-10 border border-white/[0.04] hover:border-white/[0.08] rounded-xl transition-all duration-500 group overflow-hidden"
                 >
                   {/* Hover bg gradient */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{ background: "linear-gradient(135deg, rgba(255,168,27,0.04) 0%, transparent 60%)" }}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-xl"
+                    style={{ background: "linear-gradient(135deg, rgba(255,168,27,0.03) 0%, transparent 60%)" }}
                   />
                   {/* Index */}
-                  <span className="absolute top-6 right-8 tag-mono text-on-surface-variant/20 group-hover:text-primary/30 transition-colors duration-500 text-2xl font-black">
+                  <span className="absolute top-6 right-8 text-[11px] font-medium text-on-surface-variant/15 group-hover:text-primary/25 transition-colors duration-500 tracking-wider">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div className="relative mb-8">
+                  <div className="relative mb-6">
                     <div
-                      className="inline-flex items-center justify-center w-14 h-14 text-primary group-hover:scale-110 transition-all duration-300 origin-left"
+                      className="inline-flex items-center justify-center w-12 h-12 rounded-xl text-primary group-hover:scale-110 transition-all duration-300 origin-left"
                       style={{
-                        background: "rgba(255,168,27,0.08)",
-                        border: "1px solid rgba(255,168,27,0.15)",
-                        boxShadow: "0 0 20px rgba(255,168,27,0)",
-                        transition: "box-shadow 0.4s, border-color 0.3s, transform 0.3s",
+                        background: "rgba(255,168,27,0.06)",
+                        border: "1px solid rgba(255,168,27,0.1)",
                       }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px rgba(255,168,27,0.2)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,168,27,0.4)"; }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px rgba(255,168,27,0)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,168,27,0.15)"; }}
                     >
-                      <svc.Icon className="w-6 h-6" />
+                      <svc.Icon className="w-5 h-5" />
                     </div>
                   </div>
-                  <h3 className="relative font-headline text-xl font-black uppercase tracking-tight mb-4 group-hover:text-primary transition-colors duration-300">{svc.title}</h3>
+                  <h3 className="relative font-headline text-lg font-bold tracking-tight mb-3 group-hover:text-primary transition-colors duration-300">{svc.title}</h3>
                   <p className="relative text-on-surface-variant text-sm leading-relaxed">{svc.desc}</p>
                   {/* Bottom accent */}
-                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-px bg-gradient-to-r from-primary/60 to-transparent transition-all duration-700" />
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 group-hover:w-16 h-[2px] bg-primary transition-all duration-500 rounded-full" />
                 </motion.div>
               ))}
             </div>
 
-            <motion.div {...fadeUp} className="text-center mt-12">
+            <motion.div {...fadeUp} className="text-center mt-14">
               <a
                 href="https://wa.me/5555981225699"
                 target="_blank"
                 rel="noreferrer"
                 onClick={trackContact}
-                className="btn-primary inline-flex items-center gap-3"
+                className="btn-primary inline-flex items-center gap-3 text-sm"
               >
-                <MessageCircle className="w-5 h-5" />
+                <img src="/wpp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
                 Fale com a gente
               </a>
             </motion.div>
@@ -950,24 +895,21 @@ export default function App() {
         </section>
 
         {/* ── NOSSA EQUIPE ── */}
-        <section id="equipe" className="py-24 bg-surface relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-linear-to-r from-primary/60 via-transparent to-transparent" />
-          <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-primary/5 blur-3xl rounded-full pointer-events-none" />
-
+        <section id="equipe" className="py-28 bg-surface relative overflow-hidden">
           <div className="container mx-auto px-6 md:px-16">
             {/* Header */}
-            <div className="text-center mb-16">
-              <motion.span {...fadeUp} className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
+            <div className="text-center mb-20">
+              <motion.span {...fadeUp} className="section-tag justify-center">
                 As Pessoas Por Trás dos Projetos
               </motion.span>
-              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-6xl font-black tracking-tighter">
+              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em]">
                 Nossa{" "}
                 <span className="text-gradient-primary">Equipe</span>
               </motion.h2>
             </div>
 
             {/* Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
               {TEAM_MEMBERS.map((member, i) => (
                 <motion.div
                   key={i}
@@ -976,7 +918,7 @@ export default function App() {
                   className="group relative flex flex-col items-center text-center"
                 >
                   {/* Photo */}
-                  <div className="relative w-full aspect-[3/4] overflow-hidden border border-white/10 mb-6">
+                  <div className="relative w-full aspect-[3/4] overflow-hidden border border-white/[0.06] rounded-xl mb-6">
                     <img
                       src={member.img}
                       alt={member.name}
@@ -984,16 +926,16 @@ export default function App() {
                       loading="lazy"
                       decoding="async"
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-surface/80 via-surface/10 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-surface/70 via-surface/5 to-transparent" />
                     {/* Accent bar */}
-                    <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[3px] bg-primary transition-all duration-500" />
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 group-hover:w-12 h-[2px] bg-primary transition-all duration-500 rounded-full" />
                   </div>
 
                   {/* Info */}
-                  <h3 className="font-headline text-xl font-black uppercase tracking-tight mb-1">
+                  <h3 className="font-headline text-lg font-bold tracking-tight mb-1">
                     {member.name}
                   </h3>
-                  <p className="text-primary font-bold uppercase tracking-[0.2em] text-[10px]">
+                  <p className="text-on-surface-variant font-medium text-xs tracking-wide">
                     {member.role}
                   </p>
                 </motion.div>
@@ -1005,23 +947,21 @@ export default function App() {
         {/* ── CTA FINAL ── */}
         <section className="py-40 bg-surface relative overflow-hidden">
           {/* BG accent */}
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 blur-3xl rounded-full pointer-events-none" />
-          </div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/[0.04] blur-[120px] rounded-full pointer-events-none" />
 
           <motion.div
             {...fadeUp}
             className="container mx-auto px-6 text-center w-full relative z-10"
           >
-            <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-6 block">
+            <span className="section-tag justify-center">
               Precisa de um projeto?
             </span>
-            <h2 className="font-headline text-3xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-tight mb-8">
+            <h2 className="font-headline text-3xl md:text-5xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05] mb-8">
               Sua obra precisa de <br className="hidden md:block" />
               projetos que <span className="text-gradient-primary">funcionem</span> e <br className="hidden md:block" />
               nossa engenharia garante&nbsp;isso.
             </h2>
-            <p className="text-base sm:text-xl text-on-surface-variant mb-12 font-medium max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-on-surface-variant mb-14 font-normal max-w-2xl mx-auto">
               Fale agora com nossa equipe especializada em BIM Elétrico. Atendimento direto — sem robô, sem demora.
             </p>
             <a
@@ -1029,28 +969,24 @@ export default function App() {
               target="_blank"
               rel="noreferrer"
               onClick={trackContact}
-              className="btn-primary inline-flex items-center gap-2 sm:gap-4 px-4 py-4 md:px-12 md:py-6 group text-[10px] sm:text-xs md:text-base whitespace-nowrap"
+              className="btn-primary inline-flex items-center gap-3 px-10 py-5 group text-sm md:text-base"
             >
-              <MessageCircle className="w-6 h-6" />
+              <img src="/wpp.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
               Fale no WhatsApp agora
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </a>
           </motion.div>
         </section>
 
         {/* ── CONTATO ── */}
-        <section id="contato" className="py-24 bg-surface-low relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-linear-to-r from-primary/60 via-transparent to-transparent" />
-          <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/5 blur-3xl rounded-full pointer-events-none" />
-          <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-primary/5 blur-3xl rounded-full pointer-events-none" />
-
+        <section id="contato" className="py-28 bg-surface-low relative overflow-hidden">
           <div className="container mx-auto px-6 md:px-16">
             {/* Header */}
-            <div className="text-center mb-16">
-              <motion.span {...fadeUp} className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
+            <div className="text-center mb-20">
+              <motion.span {...fadeUp} className="section-tag justify-center">
                 Contato
               </motion.span>
-              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-6xl font-black tracking-tighter">
+              <motion.h2 {...fadeUp} className="font-headline text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em]">
                 Fale com a gente,
                 <br />
                 <span className="text-gradient-primary">nossa equipe está pronta!</span>
@@ -1133,7 +1069,7 @@ export default function App() {
                   type="submit"
                   className="btn-primary flex items-center justify-center gap-3 w-full sm:w-auto self-start group text-base"
                 >
-                  <MessageCircle className="w-5 h-5" />
+                  <img src="/wpp.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
                   Enviar via WhatsApp
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                 </button>
@@ -1183,7 +1119,7 @@ export default function App() {
 
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 flex items-center justify-center border border-white/10 shrink-0 rounded-[5px]">
-                      <MessageCircle className="w-4 h-4 text-primary" />
+                      <img src="/wpp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
                     </div>
                     <div>
                       <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">WhatsApp</p>
@@ -1198,15 +1134,15 @@ export default function App() {
                   target="_blank"
                   rel="noreferrer"
                   onClick={trackContact}
-                  className="btn-primary flex items-center justify-center gap-3 w-full text-base"
+                  className="btn-primary flex items-center justify-center gap-3 w-full text-sm"
                 >
-                  <img src="https://i.imgur.com/rZwZ6jL.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
+                  <img src="/wpp.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
                   Falar direto no WhatsApp
                 </a>
 
                 {/* Trust badge */}
-                <div className="text-center py-4 border border-white/5 rounded-[5px]">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant">
+                <div className="text-center py-4 border border-white/[0.05] rounded-xl">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.15em] text-on-surface-variant">
                     ⚡ Resposta em até <span className="text-primary">2 horas</span> úteis
                   </p>
                 </div>
@@ -1217,31 +1153,36 @@ export default function App() {
       </main>
 
       {/* ── FOOTER ── */}
-      <footer className="bg-surface py-12 border-t border-white/5">
-        <div className="container mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex flex-col items-center md:items-start gap-3">
-            <img
-              src="https://i.imgur.com/DWraQLz.png"
-              alt="Grelex Engenharia Elétrica"
-              className="h-10 w-auto object-contain"
-              loading="lazy"
-              decoding="async"
-            />
-            <p className="text-[#9F9B96] text-xs tracking-wide">
-              © 2024 Grelex Engenharia Elétrica. Projetos que funcionam de verdade.
-            </p>
-          </div>
+      <footer className="bg-surface py-16 border-t border-white/[0.04]">
+        <div className="container mx-auto px-6 md:px-16">
+          {/* Divider glow */}
+          <div className="divider-glow mb-12 opacity-30" />
+          
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="flex flex-col items-center md:items-start gap-4">
+              <img
+                src="https://i.imgur.com/DWraQLz.png"
+                alt="Grelex Engenharia Elétrica"
+                className="h-8 w-auto object-contain opacity-80"
+                loading="lazy"
+                decoding="async"
+              />
+              <p className="text-on-surface-variant/60 text-xs tracking-wide">
+                © 2024 Grelex Engenharia Elétrica. Projetos que funcionam de verdade.
+              </p>
+            </div>
 
-          <div className="flex flex-wrap justify-center gap-8">
-            {["Serviços", "Política de Privacidade"].map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="text-[#9F9B96] hover:text-primary text-[10px] font-bold uppercase tracking-widest transition-colors"
-              >
-                {link}
-              </a>
-            ))}
+            <div className="flex flex-wrap justify-center gap-8">
+              {["Serviços", "Política de Privacidade"].map((link) => (
+                <a
+                  key={link}
+                  href="#"
+                  className="text-on-surface-variant/50 hover:text-on-surface text-xs font-medium tracking-wide transition-colors duration-300"
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </footer>
@@ -1258,7 +1199,7 @@ export default function App() {
         className="fixed bottom-6 right-6 z-50 w-16 h-16 flex items-center justify-center hover:scale-110 transition-transform active:scale-95 drop-shadow-xl"
         aria-label="WhatsApp"
       >
-        <img src="https://i.imgur.com/rZwZ6jL.png" alt="WhatsApp" className="w-full h-full object-contain" />
+        <img src="/wpp.png" alt="WhatsApp" className="w-full h-full object-contain" />
       </a>
     </div>
   );
