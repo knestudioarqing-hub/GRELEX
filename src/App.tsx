@@ -177,7 +177,7 @@ function MoodLight() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 10 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col gap-2 bg-[#181817]/90 backdrop-blur-xl border border-white/10 p-4 rounded-[5px] shadow-2xl"
+            className="flex flex-col gap-2 bg-[#181817]/90 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-2xl"
           >
             <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#9F9B96] mb-1 text-right">Mood Light</p>
             {MOODS.map((mood) => (
@@ -335,7 +335,7 @@ export default function App() {
               onClick={trackContact}
               className="btn-primary text-xs py-2.5 px-5 gap-2"
             >
-              <img src="/wpp.png" alt="WhatsApp" className="w-3.5 h-3.5 object-contain" />
+              <img src="/wppblack.png" alt="WhatsApp" className="w-3.5 h-3.5 object-contain" />
               Fale no WhatsApp
             </a>
           </div>
@@ -377,7 +377,7 @@ export default function App() {
               onClick={trackContact}
               className="btn-primary flex items-center gap-2 mt-4"
             >
-              <img src="/wpp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
+              <img src="/wppblack.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
               Fale no WhatsApp
             </a>
           </motion.div>
@@ -452,7 +452,7 @@ export default function App() {
                   onClick={trackContact}
                   className="btn-primary flex items-center justify-center gap-3 text-sm"
                 >
-                  <img src="/wpp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
+                  <img src="/wppblack.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
                   Fale com a gente
                 </a>
                 <a
@@ -658,7 +658,7 @@ export default function App() {
                   onClick={trackContact}
                   className="btn-primary flex items-center gap-2 text-sm"
                 >
-                  <img src="/wpp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
+                  <img src="/wppblack.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
                   Fale com a gente
                 </a>
               </div>
@@ -887,7 +887,7 @@ export default function App() {
                 onClick={trackContact}
                 className="btn-primary inline-flex items-center gap-3 text-sm"
               >
-                <img src="/wpp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
+                <img src="/wppblack.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
                 Fale com a gente
               </a>
             </motion.div>
@@ -971,7 +971,7 @@ export default function App() {
               onClick={trackContact}
               className="btn-primary inline-flex items-center gap-3 px-10 py-5 group text-sm md:text-base"
             >
-              <img src="/wpp.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
+              <img src="/wppblack.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
               Fale no WhatsApp agora
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </a>
@@ -1069,7 +1069,7 @@ export default function App() {
                   type="submit"
                   className="btn-primary flex items-center justify-center gap-3 w-full sm:w-auto self-start group text-base"
                 >
-                  <img src="/wpp.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
+                  <img src="/wppblack.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
                   Enviar via WhatsApp
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                 </button>
@@ -1136,7 +1136,7 @@ export default function App() {
                   onClick={trackContact}
                   className="btn-primary flex items-center justify-center gap-3 w-full text-sm"
                 >
-                  <img src="/wpp.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
+                  <img src="/wppblack.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
                   Falar direto no WhatsApp
                 </a>
 
@@ -1196,7 +1196,7 @@ export default function App() {
         target="_blank"
         rel="noreferrer"
         onClick={trackContact}
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 flex items-center justify-center hover:scale-110 transition-transform active:scale-95 drop-shadow-xl"
+        className="fixed bottom-6 right-6 z-50 w-[54px] h-[54px] flex items-center justify-center hover:scale-110 transition-transform active:scale-95 drop-shadow-xl"
         aria-label="WhatsApp"
       >
         <img src="/wpp.png" alt="WhatsApp" className="w-full h-full object-contain" />
