@@ -302,18 +302,23 @@ export default function App() {
       {/* ── NAVBAR ── */}
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          scrolled ? "bg-[#111111]/95 backdrop-blur-lg shadow-lg shadow-[#111111]/60 py-4" : "bg-transparent py-6"
+          scrolled
+            ? "bg-[#0d0d0d]/95 backdrop-blur-xl py-4"
+            : "bg-transparent py-6"
         } px-6 md:px-16 flex items-center justify-between`}
+        style={scrolled ? {
+          boxShadow: "0 1px 0 rgba(255,168,27,0.12), 0 8px 32px rgba(0,0,0,0.5)",
+        } : undefined}
       >
-        <a href="#inicio" className="flex items-center gap-3">
+        <a href="#inicio" className="flex items-center gap-3 group">
           <img
             src="https://i.imgur.com/DWraQLz.png"
             alt="Grelex Engenharia Elétrica"
-            className="h-10 w-auto object-contain"
+            className="h-10 w-auto object-contain transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(255,168,27,0.6)]"
             loading="eager"
             decoding="async"
           />
-          <span className="w-px h-6 bg-white/20" />
+          <span className="w-px h-6 bg-white/15" />
           <span style={{ fontFamily: "'Poppins', sans-serif" }} className="text-white font-medium text-lg uppercase tracking-tighter">
             GRELEX
           </span>
@@ -324,11 +329,12 @@ export default function App() {
             <a
               key={link}
               href={`#${link.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}`}
-              className={`font-headline text-sm font-bold uppercase tracking-tight transition-colors ${
+              className={`font-headline text-sm font-bold uppercase tracking-tight transition-all duration-200 relative group ${
                 i === 0 ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
               }`}
             >
               {link}
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
             </a>
           ))}
         </div>
@@ -408,12 +414,16 @@ export default function App() {
           </div>
 
           {/* Decorative grid */}
-          <div className="absolute inset-0 z-0 opacity-5"
+          <div className="absolute inset-0 z-0 opacity-[0.06]"
             style={{
-              backgroundImage: "linear-gradient(#5C5C5B 1px, transparent 1px), linear-gradient(90deg, #5C5C5B 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
+              backgroundImage: "linear-gradient(rgba(255,168,27,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,168,27,0.3) 1px, transparent 1px)",
+              backgroundSize: "80px 80px",
             }}
           />
+          {/* Radial vignette over grid */}
+          <div className="absolute inset-0 z-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 70% at 20% 50%, transparent 0%, #111111 100%)" }} />
+          {/* Scanline sweep */}
+          <div className="scanline-overlay z-[1]" />
 
           <div className="container mx-auto px-6 md:px-16 relative z-10 pt-32 pb-24">
             <motion.div
@@ -423,12 +433,18 @@ export default function App() {
               className="max-w-4xl"
             >
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 border border-primary/40 bg-primary/10 px-4 py-2 mb-8">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-xs font-bold text-primary uppercase tracking-[0.2em]">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="inline-flex items-center gap-2.5 border border-primary/30 bg-primary/8 px-4 py-2 mb-8"
+                style={{ boxShadow: "0 0 20px rgba(255,168,27,0.08), inset 0 0 20px rgba(255,168,27,0.04)" }}
+              >
+                <span className="glow-dot" />
+                <span className="tag-mono text-primary">
                   Há +5 Anos no Campo de Batalha Chamado Obra
                 </span>
-              </div>
+              </motion.div>
 
               <h1 className="font-headline text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.92] tracking-tighter mb-8">
                 Projetos de{" "}
@@ -462,14 +478,20 @@ export default function App() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="hidden lg:flex absolute right-16 top-1/2 -translate-y-1/2 glass-panel p-8 flex-col gap-6 w-72"
+              className="hidden lg:flex absolute right-16 top-1/2 -translate-y-1/2 glass-panel p-8 flex-col gap-6 w-72 corner-mark-full"
+              style={{ animation: "float 6s ease-in-out infinite", animationDelay: "1s" }}
             >
+              {/* Top label */}
+              <div className="flex items-center gap-2 mb-2">
+                <span className="glow-dot" style={{ width: "5px", height: "5px" }} />
+                <span className="tag-mono text-on-surface-variant">sistema // ativo</span>
+              </div>
               {STATS.slice(0, 2).map((s) => (
-                <div key={s.label} className="border-l-4 border-primary pl-4">
-                  <p className="font-headline text-3xl font-black text-primary">
+                <div key={s.label} className="border-l-2 border-primary/60 pl-4 group">
+                  <p className="font-headline text-3xl font-black text-primary drop-shadow-[0_0_12px_rgba(255,168,27,0.3)]">
                     <AnimatedCounter value={s.value} />
                   </p>
-                  <p className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mt-1">
+                  <p className="tag-mono text-on-surface-variant mt-1">
                     {s.label}
                   </p>
                 </div>
@@ -532,36 +554,38 @@ export default function App() {
                   key={i}
                   {...fadeUp}
                   transition={{ duration: 0.7, delay: i * 0.1 }}
-                  className="relative h-56 flex flex-col items-center justify-center p-8 group overflow-hidden rounded-[8px] cursor-default"
+                  whileHover={{ y: -4 }}
+                  className="relative h-56 flex flex-col items-center justify-center p-8 group overflow-hidden cursor-default corner-mark-full"
                   style={{
-                    background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.04) 100%)",
+                    background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 60%, rgba(255,255,255,0.03) 100%)",
                     backdropFilter: "blur(20px)",
                     WebkitBackdropFilter: "blur(20px)",
-                    border: "1px solid rgba(255,255,255,0.10)",
-                    boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.3)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.3)",
+                    transition: "border-color 0.4s, box-shadow 0.4s",
                   }}
                 >
-                  {/* Glass reflection — top highlight */}
+                  {/* Index number — top left */}
+                  <span className="absolute top-4 left-4 tag-mono text-on-surface-variant/30 group-hover:text-primary/40 transition-colors duration-500">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+
+                  {/* Glass highlight */}
                   <div
-                    className="absolute top-0 left-0 w-full h-1/2 pointer-events-none rounded-t-[8px]"
-                    style={{
-                      background: "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%)",
-                    }}
+                    className="absolute top-0 left-0 w-full h-1/3 pointer-events-none"
+                    style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%)" }}
                   />
 
-                  {/* Hover glow */}
+                  {/* Hover glow radial */}
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[8px]"
-                    style={{
-                      background: "radial-gradient(circle at 50% 50%, var(--mood-glow, rgba(255,168,27,0.12)) 0%, transparent 70%)",
-                      boxShadow: "inset 0 0 30px rgba(255,255,255,0.03)",
-                    }}
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-600 pointer-events-none"
+                    style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(255,168,27,0.1) 0%, transparent 70%)" }}
                   />
 
                   {stat.label === "Modelagem em Revit MEP" && (
                     <img
                       src={IMAGES.STATS}
-                      className="absolute inset-0 w-full h-full object-cover opacity-[0.06] grayscale rounded-[8px]"
+                      className="absolute inset-0 w-full h-full object-cover opacity-[0.05] grayscale"
                       referrerPolicy="no-referrer"
                       alt=""
                       loading="lazy"
@@ -570,19 +594,17 @@ export default function App() {
                   )}
 
                   <div className="relative z-10 text-center">
-                    <p className="font-headline text-4xl sm:text-5xl font-black text-primary mb-3 drop-shadow-[0_0_15px_var(--mood-glow,rgba(255,168,27,0.25))]">
+                    <p className="font-headline text-4xl sm:text-5xl font-black text-primary mb-3"
+                      style={{ textShadow: "0 0 20px rgba(255,168,27,0.25)" }}>
                       <AnimatedCounter value={stat.value} />
                     </p>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant">
+                    <p className="tag-mono text-on-surface-variant">
                       {stat.label}
                     </p>
                   </div>
 
-                  {/* Bottom accent bar */}
-                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[2px] bg-gradient-to-r from-primary via-primary/60 to-transparent transition-all duration-700 rounded-b-[8px]" />
-
-                  {/* Corner accent */}
-                  <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-primary/20 group-hover:bg-primary/50 transition-colors duration-500" />
+                  {/* Bottom scan bar on hover */}
+                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent transition-all duration-700" />
                 </motion.div>
               ))}
             </div>
@@ -877,13 +899,37 @@ export default function App() {
                   key={i}
                   {...fadeUp}
                   transition={{ duration: 0.6, delay: i * 0.08 }}
-                  className="bg-surface p-10 border-l-4 border-transparent hover:border-primary hover:bg-surface-high transition-all duration-300 group"
+                  whileHover={{ x: 4 }}
+                  className="relative bg-surface p-10 border-l-2 border-transparent hover:border-primary transition-all duration-400 group overflow-hidden corner-mark-full"
+                  style={{ transition: "border-color 0.3s, background 0.4s" }}
                 >
-                  <div className="mb-8 text-primary group-hover:scale-110 transition-transform origin-left">
-                    <svc.Icon className="w-10 h-10" />
+                  {/* Hover bg gradient */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: "linear-gradient(135deg, rgba(255,168,27,0.04) 0%, transparent 60%)" }}
+                  />
+                  {/* Index */}
+                  <span className="absolute top-6 right-8 tag-mono text-on-surface-variant/20 group-hover:text-primary/30 transition-colors duration-500 text-2xl font-black">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="relative mb-8">
+                    <div
+                      className="inline-flex items-center justify-center w-14 h-14 text-primary group-hover:scale-110 transition-all duration-300 origin-left"
+                      style={{
+                        background: "rgba(255,168,27,0.08)",
+                        border: "1px solid rgba(255,168,27,0.15)",
+                        boxShadow: "0 0 20px rgba(255,168,27,0)",
+                        transition: "box-shadow 0.4s, border-color 0.3s, transform 0.3s",
+                      }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px rgba(255,168,27,0.2)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,168,27,0.4)"; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px rgba(255,168,27,0)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,168,27,0.15)"; }}
+                    >
+                      <svc.Icon className="w-6 h-6" />
+                    </div>
                   </div>
-                  <h3 className="font-headline text-xl font-black uppercase tracking-tight mb-4">{svc.title}</h3>
-                  <p className="text-on-surface-variant text-sm leading-relaxed">{svc.desc}</p>
+                  <h3 className="relative font-headline text-xl font-black uppercase tracking-tight mb-4 group-hover:text-primary transition-colors duration-300">{svc.title}</h3>
+                  <p className="relative text-on-surface-variant text-sm leading-relaxed">{svc.desc}</p>
+                  {/* Bottom accent */}
+                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-px bg-gradient-to-r from-primary/60 to-transparent transition-all duration-700" />
                 </motion.div>
               ))}
             </div>
