@@ -3,6 +3,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* ─── META PIXEL TYPE ────────────────────────────────────── */
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+function trackContact() {
+  if (typeof window.fbq === "function") {
+    window.fbq("track", "Contact");
+  }
+}
+
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import {
@@ -325,6 +338,7 @@ export default function App() {
             href="https://wa.me/5555981225699"
             target="_blank"
             rel="noreferrer"
+            onClick={trackContact}
             className="btn-primary flex items-center gap-2 text-sm py-3 px-6"
           >
             <MessageCircle className="w-4 h-4" />
@@ -365,6 +379,7 @@ export default function App() {
               href="https://wa.me/5555981225699"
               target="_blank"
               rel="noreferrer"
+              onClick={trackContact}
               className="btn-primary flex items-center gap-2 mt-4"
             >
               <MessageCircle className="w-4 h-4" />
@@ -433,6 +448,7 @@ export default function App() {
                   href="https://wa.me/5555981225699"
                   target="_blank"
                   rel="noreferrer"
+                  onClick={trackContact}
                   className="btn-primary flex items-center justify-center gap-3 text-base"
                 >
                   <MessageCircle className="w-5 h-5" />
@@ -666,6 +682,7 @@ export default function App() {
                   href="https://wa.me/5555981225699"
                   target="_blank"
                   rel="noreferrer"
+                  onClick={trackContact}
                   className="btn-primary flex items-center gap-2"
                 >
                   <MessageCircle className="w-4 h-4" />
@@ -876,6 +893,7 @@ export default function App() {
                 href="https://wa.me/5555981225699"
                 target="_blank"
                 rel="noreferrer"
+                onClick={trackContact}
                 className="btn-primary inline-flex items-center gap-3"
               >
                 <MessageCircle className="w-5 h-5" />
@@ -964,6 +982,7 @@ export default function App() {
               href="https://wa.me/5555981225699"
               target="_blank"
               rel="noreferrer"
+              onClick={trackContact}
               className="btn-primary inline-flex items-center gap-2 sm:gap-4 px-4 py-4 md:px-12 md:py-6 group text-[10px] sm:text-xs md:text-base whitespace-nowrap"
             >
               <MessageCircle className="w-6 h-6" />
@@ -1006,6 +1025,7 @@ export default function App() {
                   const whatsapp = (form.elements.namedItem("whatsapp") as HTMLInputElement).value;
                   const mensagem = (form.elements.namedItem("mensagem") as HTMLTextAreaElement).value;
                   const text = `Olá! Meu nome é ${nome}.%0AEmail: ${email}%0AWhatsApp: ${whatsapp}%0A%0A${mensagem}`;
+                  trackContact();
                   window.open(`https://wa.me/5555981225699?text=${text}`, "_blank");
                 }}
               >
@@ -1131,6 +1151,7 @@ export default function App() {
                   href="https://wa.me/5555981225699"
                   target="_blank"
                   rel="noreferrer"
+                  onClick={trackContact}
                   className="btn-primary flex items-center justify-center gap-3 w-full text-base"
                 >
                   <img src="https://i.imgur.com/rZwZ6jL.png" alt="WhatsApp" className="w-5 h-5 object-contain" />
@@ -1187,6 +1208,7 @@ export default function App() {
         href="https://wa.me/5555981225699"
         target="_blank"
         rel="noreferrer"
+        onClick={trackContact}
         className="fixed bottom-6 right-6 z-50 w-16 h-16 flex items-center justify-center hover:scale-110 transition-transform active:scale-95 drop-shadow-xl"
         aria-label="WhatsApp"
       >
